@@ -1,8 +1,8 @@
-using BackendArchitect.Databases;
+using BackendArchitect.Databases.Sql.Indexing;
 
-namespace BackendArchitect.Tests;
+namespace BackendArchitect.Tests.Databases.Sql;
 
-// Month 1 — proving the scan vs seek scaling story.
+// Databases · SQL · Indexing — proving the scan vs seek scaling story.
 public class IndexIntuitionTests
 {
     private static List<Customer> Table(int rows) =>

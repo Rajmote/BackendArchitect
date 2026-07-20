@@ -1,4 +1,4 @@
--- Month 1 · Indexing & query-plan playground (SQL Server / T-SQL)
+-- Databases · SQL · Indexing & query-plan playground (SQL Server / T-SQL)
 -- Run block by block in SSMS or Azure Data Studio with "Include Actual Execution Plan" on.
 -- Postgres users: swap SET STATISTICS IO for EXPLAIN (ANALYZE, BUFFERS).
 

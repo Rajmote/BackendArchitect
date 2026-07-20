@@ -1,6 +1,10 @@
-# Month 1 · Lesson 2 — Reading a query plan
+# Databases · SQL · Reading a query plan
 
 > You never *guess* whether an index is used — you make the database **show you its plan**.
+
+**Where this sits:** Technology `Databases` → Main topic `SQL` → Sub topic `Query plans`.
+Run the plan lab: [`../Indexing/indexing-playground.sql`](../Indexing/indexing-playground.sql).
+Prerequisite sub topic: [`../Indexing/Indexing.md`](../Indexing/Indexing.md).
 
 ## How to get a plan (SQL Server)
 

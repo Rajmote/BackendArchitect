@@ -1,4 +1,4 @@
-using BackendArchitect.Databases;
+using BackendArchitect.Databases.Sql.Indexing;
 
-Console.WriteLine("===== Month 1: Databases — Indexing (seek vs scan) =====");
-new DatabasesDemo().Run();
+Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
+new IndexingDemo().Run();

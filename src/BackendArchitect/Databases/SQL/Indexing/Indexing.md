@@ -1,6 +1,11 @@
-# Month 1 · Lesson 1 — Indexing
+# Databases · SQL · Indexing
 
 > **A table is an unordered pile of rows. An index is a sorted phone book that points into that pile.**
+
+**Where this sits:** Technology `Databases` → Main topic `SQL` → Sub topic `Indexing`.
+Runnable example: [`IndexIntuition.cs`](IndexIntuition.cs) + [`IndexingDemo.cs`](IndexingDemo.cs).
+SQL you can run: [`indexing-playground.sql`](indexing-playground.sql). Sibling sub topic:
+[`../QueryPlans/QueryPlans.md`](../QueryPlans/QueryPlans.md).
 
 ## Why
 
@@ -34,10 +39,10 @@ flowchart TD
 Because leaves are **sorted**: equality (`=`) is fast **and** ranges (`BETWEEN`, `>`, `ORDER BY`,
 `LIKE 'a%'`) are fast — find the start, walk the leaves.
 
-## The runnable model in this repo
+## The runnable example in this repo
 
-[`IndexIntuition.cs`](IndexIntuition.cs) models exactly this idea (as an analogy, not a real B-tree)
-and counts **comparisons** as a stand-in for a database's **logical reads** cost signal.
+[`IndexIntuition.cs`](IndexIntuition.cs) models this idea (an analogy, not a real B-tree) and counts
+**comparisons** as a stand-in for a database's **logical reads** cost signal.
 
 ```mermaid
 classDiagram
@@ -61,7 +66,7 @@ classDiagram
 
 ```mermaid
 sequenceDiagram
-    participant D as DatabasesDemo
+    participant D as IndexingDemo
     participant S as IndexIntuition
     participant I as EmailIndex
     D->>S: Scan(table, target)

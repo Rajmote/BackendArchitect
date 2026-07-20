@@ -1,4 +1,4 @@
-namespace BackendArchitect.Databases;
+namespace BackendArchitect.Databases.Sql.Indexing;
 
 // A record in our tiny "table".
 public record Customer(int Id, string Email);

@@ -9,17 +9,25 @@ Every topic gets:
 - **Tests** — xUnit tests that prove the idea and lock the behaviour.
 - **SQL / scripts** — where the topic is database- or infra-flavoured.
 
-We follow the **6-month plan** ordering: Databases → APIs → Concurrency → Distributed → DDD → System design.
+We follow the **6-month plan** ordering (Databases → APIs → Concurrency → Distributed → DDD → System
+design), but the repo is organized by the roadmap's **Technology → Main topic → Sub topic → Example**
+tree, not by month.
 
 ## Layout
 
 ```
 BackendArchitect/
-├── src/BackendArchitect/            # the runnable examples (console app)
-│   └── Month01-Databases/           # one folder per month/topic
-├── tests/BackendArchitect.Tests/    # xUnit tests
-└── docs/progress.md                 # progress log
+├── src/BackendArchitect/                       # runnable examples (console app)
+│   └── <Technology>/<MainTopic>/<SubTopic>/    # e.g. Databases/SQL/Indexing/
+│       ├── <SubTopic>.md                       #   explanation + Mermaid diagrams
+│       ├── *.cs                                #   runnable example
+│       └── *.sql                               #   scripts where relevant
+├── tests/BackendArchitect.Tests/               # xUnit tests, mirrored path
+│   └── <Technology>/<MainTopic>/
+└── docs/progress.md                            # progress log
 ```
+
+Currently filled: `Databases/SQL/Indexing/` and `Databases/SQL/QueryPlans/`.
 
 ## Build / test / run
 

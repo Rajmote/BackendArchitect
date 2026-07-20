@@ -1,24 +1,25 @@
 # Progress log
 
-Driven by the **6-month plan** in [`../../BackendAndArchitectRoadmap.md`](../../BackendAndArchitectRoadmap.md).
+Structure and priorities live in [`../../BackendAndArchitectRoadmap.md`](../../BackendAndArchitectRoadmap.md)
+(Technology → Main topic → Sub topic → Example). The 6-month plan drives weekly focus.
 
-## Month 1 — Databases
-| Topic | Notes | Code | Status |
+## Current focus: Technology 2 — Databases
+
+| Sub topic | Notes | Code / script | Status |
 |---|---|---|---|
-| Indexing (B-trees, clustered vs non-clustered, composite, covering) | [01-Indexing.md](../src/BackendArchitect/Month01-Databases/01-Indexing.md) | `IndexIntuition.cs` | ✅ done |
-| Reading a query plan (seek vs scan, function-on-column, logical reads) | [02-QueryPlans.md](../src/BackendArchitect/Month01-Databases/02-QueryPlans.md) | `indexing-playground.sql` | ✅ done |
-| Transactions & ACID, isolation levels | — | — | ⏳ next |
-| Data modeling (normalization vs denormalization, keys) | — | — | ☐ |
-| Cosmos DB (partition keys, RU/s, indexing policy, consistency) | — | — | ☐ |
+| 2.1.1 Indexing | [Indexing.md](../src/BackendArchitect/Databases/SQL/Indexing/Indexing.md) | `IndexIntuition.cs`, `IndexingDemo.cs` | ✅ |
+| 2.1.2 Query plans | [QueryPlans.md](../src/BackendArchitect/Databases/SQL/QueryPlans/QueryPlans.md) | `indexing-playground.sql` | ✅ |
+| 2.1.3 Transactions & ACID | — | — | ⏳ next |
+| 2.1.4 Isolation levels | — | — | ☐ |
+| 2.1.5 Data modeling | — | — | ☐ |
+| 2.3 Cosmos DB | — | — | ☐ |
 
-## Later months
-- Month 2 — APIs, HTTP & resilience ☐
-- Month 3 — Concurrency & observability ☐
-- Month 4 — Distributed systems & messaging ☐
-- Month 5 — Domain-Driven Design ☐
-- Month 6 — System design & architecture judgment ☐
+## Technologies (see roadmap tree for sub topics)
+- 1. Foundations ☐ · **2. Databases ⏳** · 3. APIs & HTTP ☐ · 4. Concurrency & Async ☐
+- 5. Observability & Security ☐ · 6. Performance & Reliability ☐ · 7. Cloud & Infra ☐
+- 8. Distributed Systems ☐ · 9. Architecture & Design ☐ · 10. Multiplier Skills ☐
 
 ## Log
 | Date | What I learned / built | Next |
 |---|---|---|
-| 2026-07-20 | Scaffolded BackendArchitect solution; indexing + query-plan lessons with runnable seek-vs-scan demo + SQL playground + tests | Transactions & isolation levels |
+| 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
