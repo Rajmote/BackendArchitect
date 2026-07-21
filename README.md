@@ -40,3 +40,7 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 ## Progress
 
 Tracked in [`docs/progress.md`](docs/progress.md). Tick the roadmap boxes as topics land.
+
+## Books
+
+Curated reading list covering every roadmap topic: [`docs/BookList.md`](docs/BookList.md).
