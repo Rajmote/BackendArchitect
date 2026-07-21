@@ -55,7 +55,7 @@ your *weekly* focus. Re-read this monthly and check what moved.
 
 ### Phase 5 · Architectural judgment
 - [ ] Quality attributes & trade-offs (scalability, availability, security, cost, maintainability)
-- [ ] Documenting architecture: **C4 model**, **ADRs** (✅ used at SureCore), UML/sequence (✅ you read these now)
+- [ ] Documenting architecture: **C4 model**, **ADRs** (✅ used at work), UML/sequence (✅ you read these now)
 - [ ] Anti-patterns & evolutionary architecture / fitness functions
 - [ ] **Conway's Law** / Team Topologies
 
@@ -92,7 +92,7 @@ your *weekly* focus. Re-read this monthly and check what moved.
 
 ---
 
-## Prioritized 6-month plan (tailored to .NET / Azure / SureCore)
+## Prioritized 6-month plan (tailored to .NET / Azure)
 
 Assume ~6–8 focused hours/week. Each month: one theme, a **book**, a **build**, and an **at-work** application.
 
@@ -100,7 +100,7 @@ Assume ~6–8 focused hours/week. Each month: one theme, a **book**, a **build**
 - [ ] SQL: indexing, transactions/isolation, **read query plans**; data modeling
 - [ ] Cosmos DB: partition-key design, RU/s, indexing policy, consistency levels
 - [ ] **Build:** take a slow query / a Cosmos container and make it fast; document why
-- [ ] **At work:** study how SureCore models data in Cosmos (ACL vs Output DB)
+- [ ] **At work:** study how your production system models data in Cosmos (ACL vs Output DB)
 - [ ] **Read:** DDIA ch. 1–4
 
 ### Month 2 — APIs, HTTP & resilience
@@ -114,20 +114,20 @@ Assume ~6–8 focused hours/week. Each month: one theme, a **book**, a **build**
 - [ ] async/await internals, `Channel`, parallelism, race conditions
 - [ ] OpenTelemetry: tracing + metrics + structured logs
 - [ ] **Build:** a concurrent pipeline (producer/consumer) with full telemetry
-- [ ] **At work:** add/inspect a distributed trace across two SureCore services
+- [ ] **At work:** add/inspect a distributed trace across two of your services
 - [ ] **Read:** DDIA ch. 5–9 (replication, partitioning, transactions)
 
 ### Month 4 — Distributed systems & messaging
 - [ ] CAP, consistency, the fallacies; event-driven basics
 - [ ] Event Hub / Kafka; **CQRS** and **event sourcing** (trade-offs)
 - [ ] **Build:** a small **event-sourced** service (append events, rebuild state)
-- [ ] **At work:** map SureCore's event contracts (protobuf) and consumers
+- [ ] **At work:** map your system's event contracts (protobuf) and consumers
 - [ ] **Read:** Building Microservices
 
 ### Month 5 — Domain-Driven Design
 - [ ] Bounded contexts, aggregates, ubiquitous language, context mapping
 - [ ] **Build:** model one non-trivial domain properly (aggregates + invariants)
-- [ ] **At work:** identify a bounded context in SureCore and diagram it (C4 container level)
+- [ ] **At work:** identify a bounded context in your system and diagram it (C4 container level)
 - [ ] **Read:** Learning DDD — Khononov
 
 ### Month 6 — System design & architecture judgment (capstone)

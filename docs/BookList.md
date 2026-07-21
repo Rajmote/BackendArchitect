@@ -8,7 +8,7 @@
 ## Legend
 - ⭐ **Essential** — if you only read a few, read these.
 - 📘 **Code-heavy** — real, runnable sample code (many with a GitHub repo you can clone/test).
-- 🟣 **.NET / C#-specific** — matches your stack (SureCore, C#).
+- 🟣 **.NET / C#-specific** — matches your stack (.NET, C#).
 - 🧠 **Conceptual** — light on code, heavy on judgment; read for *how to think*.
 - 🆓 **Free (legally)** — official free eBook or free online.
 
