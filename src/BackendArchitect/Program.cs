@@ -5,5 +5,5 @@ Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
 
 Console.WriteLine();
-Console.WriteLine("===== Databases · SQL · Transactions (ACID: atomicity + consistency) =====");
-new TransactionsDemo().Run();
+Console.WriteLine("===== Databases · SQL · Transactions (the four ACID properties) =====");
+new AcidDemo().Run();

@@ -130,20 +130,19 @@ In real code, wrap it in `try/catch`: commit at the end of the `try`, **rollback
 failure undoes everything.
 
 ### The runnable model in this repo
-[`Bank.cs`](Bank.cs) models a transfer as a transaction: work on a **copy** of the balances, check the
-**no-negative** rule, then **commit** both changes together — or **roll back** by discarding the copy.
-[`TransactionsDemo.cs`](TransactionsDemo.cs) runs a failing transfer (rolled back, nothing changes) and
-a successful one.
+[`Bank.cs`](Bank.cs) models a transfer as a transaction and demonstrates **all four ACID letters**:
+work on a **copy** (Atomicity), enforce the **no-negative** rule (Consistency), **lock** so concurrent
+transfers can't corrupt each other (Isolation), and **snapshot** committed state so it survives a
+restart (Durability). [`AcidDemo.cs`](AcidDemo.cs) runs one method per letter.
 
 ```powershell
 dotnet run --project src/BackendArchitect -c Release
 ```
 ```
-Start   : Alice=40.00, Bob=0.00, total=40.00
-Send 100: ROLLBACK — Alice has insufficient funds
-        : Alice=40.00, Bob=0.00 (unchanged)     <- Atomicity + Consistency
-Send 30 : COMMIT
-        : Alice=10.00, Bob=30.00, total=40.00    <- money conserved
+A Atomicity  : send 999 -> ROLLBACK; Alice=100.00 (unchanged)
+C Consistency: total before=100.00, after=100.00 (conserved)
+I Isolation  : after 200 concurrent transfers, total=100.00 (uncorrupted)
+D Durability : after restart, Bob=25.00 (survived)
 ```
 
 ```mermaid

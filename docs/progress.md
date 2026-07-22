@@ -10,7 +10,7 @@ Structure and priorities live in [`../../BackendAndArchitectRoadmap.md`](../../B
 | 2.1.1 Indexing | [Indexing.md](../src/BackendArchitect/Databases/SQL/Indexing/Indexing.md) | `IndexIntuition.cs`, `IndexingDemo.cs` | ✅ |
 | 2.1.2 Query plans | [QueryPlans.md](../src/BackendArchitect/Databases/SQL/QueryPlans/QueryPlans.md) | `indexing-playground.sql` | ✅ |
 | 2.1.3 Transactions & ACID | [Transactions.md](../src/BackendArchitect/Databases/SQL/Transactions/Transactions.md) | `Bank.cs`, `TransactionsDemo.cs` | ✅ |
-| 2.1.4 Isolation levels | — | — | ⏳ next |
+| 2.1.4 Isolation levels | [IsolationLevels.md](../src/BackendArchitect/Databases/SQL/IsolationLevels/IsolationLevels.md) 🚧 | — | ⏳ in progress (Who/What/anomalies) |
 | 2.1.5 Data modeling | — | — | ☐ |
 | 2.3 Cosmos DB | — | — | ☐ |
 
@@ -23,3 +23,4 @@ Structure and priorities live in [`../../BackendAndArchitectRoadmap.md`](../../B
 | Date | What I learned / built | Next |
 |---|---|---|
 | 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
+| 2026-07-22 | Transactions & ACID done (Bank model demonstrating all 4 ACID letters: atomicity/consistency/isolation-lock/durability-snapshot; AcidDemo + 10 tests). Removed all "SureCore" references from repo & roadmap. Added docs/BookList.md. Started Isolation Levels (Who/What/3 anomalies taught; note is WIP) | Finish Isolation Levels: the 4 levels, When/Where/How, runnable demo + tests |
