@@ -1,8 +1,5 @@
 # Databases · SQL · Transactions & ACID — a slow, example-first walkthrough
 
-> 🚧 **Work in progress** — we're learning this one section at a time. Filled so far: **Who, What.**
-> Coming as we go: **Why (the ACID letters), When, Where, How** + a runnable C# demo and tests.
->
 > **How to read this:** same order as before — **Who → What → When → Where → Why → How.**
 > **Where this sits:** Technology `Databases` → Main topic `SQL` → Sub topic `Transactions & ACID`.
 > Prerequisite: none. Leads into: [`../` Isolation levels](../) (2.1.4).
@@ -108,16 +105,89 @@ flowchart TD
 > 🧠 Memory hook: **A**ll-or-nothing · **C**onstraints hold · **I**solated from others · **D**urable forever.
 
 ## 4. WHEN — when to use a transaction
-> ⏳ *Coming.*
+- ✅ Whenever **2+ writes must all succeed or all fail** — transfer money, "create order **and** reduce
+  stock," insert into several tables together.
+- ❌ Not needed for a **single** statement — it's already atomic by itself.
+- ⏱️ Keep them **short**. A transaction holds locks; a long one blocks everyone else. Never do slow work
+  (an HTTP call, waiting on a user) *inside* a transaction.
 
-## 5. WHERE — where transactions apply / their boundaries
-> ⏳ *Coming.*
+## 5. WHERE — the boundaries
+- The boundary is **`BEGIN` … `COMMIT`/`ROLLBACK`**; everything between is one atomic unit.
+- In .NET: `using var tx = connection.BeginTransaction();` → `tx.Commit();` / `tx.Rollback();`.
+  In EF Core, one `SaveChanges()` is automatically wrapped in a transaction.
+- Make the boundary **as small as correctness allows** — wrap only the steps that must be atomic.
 
-## 6. HOW — how to use them well (step by step) + runnable demo
-> ⏳ *Coming, with a C# example wired into `Program.cs` and xUnit tests.*
+## 6. HOW — step by step (+ runnable demo)
+
+```sql
+BEGIN TRANSACTION;
+    UPDATE Accounts SET Balance = Balance - 100 WHERE Name = 'Alice';
+    UPDATE Accounts SET Balance = Balance + 100 WHERE Name = 'Bob';
+    -- check a rule (e.g. Alice not negative); if bad -> ROLLBACK
+COMMIT;   -- otherwise make both permanent together
+```
+In real code, wrap it in `try/catch`: commit at the end of the `try`, **rollback in the `catch`** so any
+failure undoes everything.
+
+### The runnable model in this repo
+[`Bank.cs`](Bank.cs) models a transfer as a transaction: work on a **copy** of the balances, check the
+**no-negative** rule, then **commit** both changes together — or **roll back** by discarding the copy.
+[`TransactionsDemo.cs`](TransactionsDemo.cs) runs a failing transfer (rolled back, nothing changes) and
+a successful one.
+
+```powershell
+dotnet run --project src/BackendArchitect -c Release
+```
+```
+Start   : Alice=40.00, Bob=0.00, total=40.00
+Send 100: ROLLBACK — Alice has insufficient funds
+        : Alice=40.00, Bob=0.00 (unchanged)     <- Atomicity + Consistency
+Send 30 : COMMIT
+        : Alice=10.00, Bob=30.00, total=40.00    <- money conserved
+```
+
+```mermaid
+classDiagram
+    class Bank {
+        -balances : Dictionary~string, decimal~
+        +Transfer(from, to, amount) TransferResult
+        +BalanceOf(account) decimal
+        +TotalMoney() decimal
+    }
+    class TransferResult {
+        <<record struct>>
+        +bool Success
+        +string Reason
+        +Ok()$ TransferResult
+        +RolledBack(reason)$ TransferResult
+    }
+    Bank ..> TransferResult : returns
+```
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant B as Bank
+    C->>B: Transfer(Alice, Bob, 100)
+    Note over B: BEGIN — copy balances, debit + credit on the copy
+    B->>B: check rule (Alice >= 0?)
+    B-->>C: ROLLBACK — discard copy, nothing changed
+    C->>B: Transfer(Alice, Bob, 30)
+    Note over B: copy, debit + credit, rule OK
+    B-->>C: COMMIT — apply both together
+```
 
 ---
 
-## Recap so far
-A transaction is a **fence around several steps** that end in **`COMMIT`** (keep them all) or
-**`ROLLBACK`** (undo them all) — so your data is never left half-changed.
+## Recap in one breath
+A transaction is a **fence around several steps** ending in **`COMMIT`** (keep all) or **`ROLLBACK`**
+(undo all), so data is never half-changed. Its four guarantees are **ACID**: **A**tomicity,
+**C**onsistency, **I**solation, **D**urability. Use one whenever **multiple writes must stand or fall
+together**; keep it **short**. Next: **Isolation levels** — how strictly concurrent transactions are
+kept apart.
+
+## Warm-up questions (answer out loud)
+1. Give a non-money example where you'd need a transaction, and why.
+2. Which ACID letter does "work on a copy, then apply together" demonstrate?
+3. Why should a transaction be kept short?
+4. How do Isolation and Consistency work together (the concert-ticket case)?
