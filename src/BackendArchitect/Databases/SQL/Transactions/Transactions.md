@@ -74,8 +74,38 @@ ROLLBACK;   -- undo it all; Alice's balance is untouched
 ---
 
 ## 3. WHY — the ACID guarantees
-> ⏳ *Coming next in the lesson.* (Preview: **A**tomicity, **C**onsistency, **I**solation, **D**urability.
-> The Alice/Bob example above already shows the **A**.)
+
+"ACID" is four promises a transaction makes. Each shown on the Alice → Bob transfer.
+
+### 🅰️ A — Atomicity ("all-or-nothing")
+All steps happen, or none do. Crash after debiting Alice but before crediting Bob → the debit is
+**rolled back** too. Never half-done. *(This is the Alice/Bob example above.)*
+
+### 🅲 C — Consistency ("the rules always hold")
+A transaction moves the DB from one valid state to another — never an invalid one. Rule: *balance can't
+go negative.* Alice has €40, tries to send €100 → the transaction is refused/rolled back so the rule is
+never broken. **Constraints, foreign keys, and invariants hold at the end of every transaction.**
+
+### 🅸 I — Isolation ("no stepping on each other")
+Concurrent transactions behave as if they ran one at a time. Two transfers touching Alice at the same
+instant can't read each other's half-finished work. Isolation has **degrees of strictness** — that's
+the entire next sub topic, **2.1.4 Isolation Levels.** For now: *transactions don't see each other's
+unfinished work.*
+
+### 🅳 D — Durability ("once done, it stays done")
+After `COMMIT`, the change survives a crash/power loss (written to disk via a write-ahead log). Commit,
+pull the power cord — on restart, Bob still has his €100.
+
+```mermaid
+flowchart TD
+    T[A transaction: debit Alice, credit Bob] --> A
+    A["🅰️ Atomicity<br/>both steps or neither"] --> C
+    C["🅲 Consistency<br/>rules/constraints stay true"] --> I
+    I["🅸 Isolation<br/>runs as if alone"] --> D
+    D["🅳 Durability<br/>survives crashes once committed"]
+```
+
+> 🧠 Memory hook: **A**ll-or-nothing · **C**onstraints hold · **I**solated from others · **D**urable forever.
 
 ## 4. WHEN — when to use a transaction
 > ⏳ *Coming.*
