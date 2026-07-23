@@ -1,9 +1,5 @@
 # Databases · SQL · Isolation Levels — a slow, example-first walkthrough
 
-> 🚧 **Work in progress** — filled so far: **Who, What, Why (the three read anomalies).**
-> Coming next session: **the four isolation levels** (which anomaly each one stops), **When, Where,
-> How** + a runnable demo and tests.
->
 > **How to read this:** same order — **Who → What → Why → (levels) → When → Where → How.**
 > **Where this sits:** Technology `Databases` → Main topic `SQL` → Sub topic `Isolation levels`.
 > Prerequisite: [`../Transactions/Transactions.md`](../Transactions/Transactions.md) (the **I** in ACID).
@@ -92,25 +88,97 @@ flowchart LR
 ---
 
 ## 4. The four isolation levels (which anomaly each stops)
-> ⏳ *Next session.* Preview — from loosest to strictest: **Read Uncommitted → Read Committed →
-> Repeatable Read → Serializable**, each switching off one more anomaly.
+
+Four notches on the dial, loosest → strictest; each turns off one more anomaly.
+
+1. **Read Uncommitted** — can read others' *uncommitted* changes. All three anomalies possible. Almost never used on purpose.
+2. **Read Committed** — reads only *committed* data → **no dirty reads**. Default in SQL Server / PostgreSQL / Oracle. Good balance.
+3. **Repeatable Read** — rows you've already read can't change → **no dirty, no non-repeatable**. New rows (phantoms) can still appear.
+4. **Serializable** — result is *as if transactions ran one at a time* → **no anomalies at all**. Safest, slowest.
+
+| Isolation level | Dirty read | Non-repeatable read | Phantom read |
+|---|:---:|:---:|:---:|
+| **Read Uncommitted** | ⚠️ possible | ⚠️ possible | ⚠️ possible |
+| **Read Committed** ← default | ✅ prevented | ⚠️ possible | ⚠️ possible |
+| **Repeatable Read** | ✅ prevented | ✅ prevented | ⚠️ possible |
+| **Serializable** | ✅ prevented | ✅ prevented | ✅ prevented |
+
+> 🧠 A **staircase**: each level down prevents everything the one above did **plus one more** anomaly —
+> while costing more concurrency. Loosest+fastest at the top, strictest+safest at the bottom.
+
+```mermaid
+flowchart TD
+    RU["1. Read Uncommitted<br/>allows all 3 anomalies · fastest"] --> RC
+    RC["2. Read Committed<br/>stops dirty reads · DEFAULT"] --> RR
+    RR["3. Repeatable Read<br/>+ stops non-repeatable reads"] --> S
+    S["4. Serializable<br/>+ stops phantoms · safest, slowest"]
+```
+
+**Footnote — Snapshot Isolation (MVCC):** many databases also offer snapshot isolation — each
+transaction reads a consistent *snapshot* as of when it began, instead of locking. It's PostgreSQL's
+real default behaviour and a SQL Server option. Covered properly in the distributed-systems month; the
+four-level table is the foundation.
 
 ## 5. WHEN — choosing a level
-> ⏳ *Next session.*
+- **Default to Read Committed** — right for most queries.
+- **Stricter only for a specific invariant:** Repeatable Read when a transaction must re-read the same
+  rows consistently; Serializable when phantoms are unacceptable (no double-booking / oversell).
+- **Read Uncommitted almost never** — only rough analytics where a slightly-wrong number is fine.
+- **Rule:** use the **loosest level that's still correct** — every notch stricter costs concurrency.
 
-## 6. WHERE — how/where you set it (.NET + SQL)
-> ⏳ *Next session.*
+## 6. WHERE — where you set it (.NET & SQL)
+```sql
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;   -- T-SQL, before BEGIN TRAN
+```
+```csharp
+using var tx = connection.BeginTransaction(IsolationLevel.Serializable);        // ADO.NET
+using var tx = context.Database.BeginTransaction(IsolationLevel.RepeatableRead); // EF Core
+```
+> ⚠️ Gotcha: `TransactionScope` defaults to **Serializable** — usually stricter than you want. Set it explicitly.
 
-## 7. HOW — step by step + runnable demo
-> ⏳ *Next session, with a C# demo + tests.*
+## 7. HOW — using it well (+ runnable demo)
+1. Choose the level, set it when you **begin** the transaction, keep the transaction **short**.
+2. At stricter levels the DB may **abort** a transaction to preserve isolation (serialization failure /
+   deadlock) → wrap it in a **retry**: catch the failure, run the whole transaction again.
+
+### The runnable model in this repo
+[`TicketBooth.cs`](TicketBooth.cs) models the oversell: booking is a "check-then-act" with a gap
+between reading availability and decrementing it. [`IsolationLevelsDemo.cs`](IsolationLevelsDemo.cs)
+sends 10 buyers at 1 ticket, with the dial **off** (no lock) vs **on** (a lock = Serializable).
+
+```powershell
+dotnet run --project src/BackendArchitect -c Release
+```
+```
+Scenario: 1 ticket left, 10 buyers click 'book' at the same instant.
+  Weak isolation (no lock)  -> sold 9 of 1 -> OVERSOLD (bug)
+  Serializable (locked)     -> sold 1 of 1 -> correct
+```
+
+```mermaid
+sequenceDiagram
+    participant A as Buyer A
+    participant B as Buyer B
+    participant DB as TicketBooth (1 left)
+    Note over A,B: Weak isolation — both read before either writes
+    A->>DB: available? -> 1
+    B->>DB: available? -> 1
+    A->>DB: book -> sold
+    B->>DB: book -> sold  Note: OVERSOLD — 2 sold, 1 seat
+    Note over A,B: Serializable — B waits for A to finish
+    A->>DB: book (locked) -> sold, now 0
+    B->>DB: book -> available? 0 -> rejected ✅
+```
 
 ---
 
-## Recap so far
+## Recap in one breath
 An isolation level is a **dial** setting **how much of another transaction's unfinished work you can
-see**. Loosen it and three anomalies can appear — **dirty read** (uncommitted data), **non-repeatable
-read** (a value changed), **phantom read** (rows appeared). The four standard levels (next session) each
-turn off more of these, trading speed for correctness.
+see**. Loosen it and three anomalies appear — **dirty read** (uncommitted data), **non-repeatable read**
+(a value changed), **phantom read** (rows appeared). The four levels form a **staircase** —
+Read Uncommitted → Read Committed (default; stops dirty) → Repeatable Read (+ stops non-repeatable) →
+Serializable (+ stops phantoms) — each safer but less concurrent. Pick the **loosest level that's still
+correct**. Next: **2.1.5 Data modeling**.
 
 ## Warm-up questions for tomorrow (answer out loud first)
 1. What does the isolation-level dial actually control (not just the trade-off)?
