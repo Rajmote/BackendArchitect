@@ -1,7 +1,7 @@
 # BackendArchitect
 
 A hands-on study repo for the **Backend Engineer → Software Architect** roadmap
-(see [`../BackendAndArchitectRoadmap.md`](../BackendAndArchitectRoadmap.md)).
+(see [`docs/BackendArchitectRoadmap.md`](docs/BackendArchitectRoadmap.md)).
 
 Every topic gets:
 - **Notes** — a markdown file with UML / flow / sequence diagrams (Mermaid), in the topic folder.

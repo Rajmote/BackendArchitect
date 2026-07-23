@@ -1,7 +1,7 @@
 # Book List — Backend Engineer → Software Architect
 
 > A curated reading list covering **every topic** in the
-> [roadmap](../../BackendAndArchitectRoadmap.md). Not all are free — chosen for **quality and coverage**,
+> [roadmap](BackendArchitectRoadmap.md). Not all are free — chosen for **quality and coverage**,
 > not price. Books are mapped to the roadmap's technology sections (§1–§10) so you always know *why*
 > you're reading one.
 

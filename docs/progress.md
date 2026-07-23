@@ -1,6 +1,6 @@
 # Progress log
 
-Structure and priorities live in [`../../BackendAndArchitectRoadmap.md`](../../BackendAndArchitectRoadmap.md)
+Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitectRoadmap.md)
 (Technology → Main topic → Sub topic → Example). The 6-month plan drives weekly focus.
 
 ## Current focus: Technology 2 — Databases (§2.1 SQL complete ✅)
