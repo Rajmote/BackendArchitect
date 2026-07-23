@@ -3,7 +3,7 @@
 Structure and priorities live in [`../../BackendAndArchitectRoadmap.md`](../../BackendAndArchitectRoadmap.md)
 (Technology → Main topic → Sub topic → Example). The 6-month plan drives weekly focus.
 
-## Current focus: Technology 2 — Databases
+## Current focus: Technology 2 — Databases (§2.1 SQL complete ✅)
 
 | Sub topic | Notes | Code / script | Status |
 |---|---|---|---|
@@ -11,7 +11,8 @@ Structure and priorities live in [`../../BackendAndArchitectRoadmap.md`](../../B
 | 2.1.2 Query plans | [QueryPlans.md](../src/BackendArchitect/Databases/SQL/QueryPlans/QueryPlans.md) | `indexing-playground.sql` | ✅ |
 | 2.1.3 Transactions & ACID | [Transactions.md](../src/BackendArchitect/Databases/SQL/Transactions/Transactions.md) | `Bank.cs`, `TransactionsDemo.cs` | ✅ |
 | 2.1.4 Isolation levels | [IsolationLevels.md](../src/BackendArchitect/Databases/SQL/IsolationLevels/IsolationLevels.md) | `TicketBooth.cs`, `IsolationLevelsDemo.cs` | ✅ |
-| 2.1.5 Data modeling | — | — | ⏳ next |
+| 2.1.5 Data modeling | [DataModeling.md](../src/BackendArchitect/Databases/SQL/DataModeling/DataModeling.md) | `FlatOrder.cs`, `Normalized.cs`, `DataModelingDemo.cs` | ✅ |
+| 2.2 NoSQL concepts | — | — | ⏳ next |
 | 2.3 Cosmos DB | — | — | ☐ |
 
 ## Technologies (see roadmap tree for sub topics)

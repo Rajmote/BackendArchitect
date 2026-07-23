@@ -151,7 +151,7 @@ dotnet run --project src/BackendArchitect -c Release
 ```
 ```
 Scenario: 1 ticket left, 10 buyers click 'book' at the same instant.
-  Weak isolation (no lock)  -> sold 9 of 1 -> OVERSOLD (bug)
+  Weak isolation (no lock)  -> sold 10 of 1 -> OVERSOLD (bug)
   Serializable (locked)     -> sold 1 of 1 -> correct
 ```
 
