@@ -58,9 +58,10 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - 2.1.5 **Data modeling** — ✅ [notes](../src/BackendArchitect/Databases/SQL/DataModeling/DataModeling.md) · code `FlatOrder.cs`, `Normalized.cs`
     - Examples: normalization/3NF ✅ · anomalies flat vs normalized ✅ · denormalization trade-off ✅ · keys (PK/FK) ✅
   - 2.1.6 **Joins & set operations** — ☐
-- **2.2 NoSQL concepts** — ⏳ next
-  - 2.2.1 Document ☐ · 2.2.2 Key-value ☐ · 2.2.3 Wide-column ☐ · 2.2.4 When to use which ☐
-- **2.3 Cosmos DB** *(used at work)*
+- **2.2 NoSQL concepts** — ✅ [notes](../src/BackendArchitect/Databases/NoSQL/Concepts/NoSqlConcepts.md) · code `RelationalStore.cs`, `DocumentStore.cs`
+  - 2.2.1 Document ✅ · 2.2.2 Key-value ✅ · 2.2.3 Wide-column ✅ · 2.2.4 When to use which ✅
+  - Examples: normalized-vs-document read/write trade ✅ · denormalization & the update anomaly ✅ · schema-on-read ✅
+- **2.3 Cosmos DB** *(used at work)* — ⏳ next
   - 2.3.1 Partition-key design ☐ · 2.3.2 RU/s ☐ · 2.3.3 Indexing policy ☐ · 2.3.4 Consistency levels ☐
 
 ## 3. APIs & HTTP 📁 `.../Apis`
@@ -114,7 +115,7 @@ Maps onto the tree above.
 ### Month 1 — Databases (§2) — *in progress*
 - [x] SQL indexing (§2.1.1) · [x] reading query plans (§2.1.2)
 - [x] transactions/isolation (§2.1.3–4) · [x] data modeling (§2.1.5)
-- [ ] NoSQL concepts (§2.2) · [ ] Cosmos DB (§2.3)
+- [x] NoSQL concepts (§2.2) · [ ] Cosmos DB (§2.3)
 - **Build:** make a slow query / Cosmos container fast; document why · **Read:** DDIA ch. 1–4
 
 ### Month 2 — APIs, HTTP & resilience (§3, §6.2)

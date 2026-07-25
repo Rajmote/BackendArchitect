@@ -12,8 +12,8 @@ Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitect
 | 2.1.3 Transactions & ACID | [Transactions.md](../src/BackendArchitect/Databases/SQL/Transactions/Transactions.md) | `Bank.cs`, `TransactionsDemo.cs` | ✅ |
 | 2.1.4 Isolation levels | [IsolationLevels.md](../src/BackendArchitect/Databases/SQL/IsolationLevels/IsolationLevels.md) | `TicketBooth.cs`, `IsolationLevelsDemo.cs` | ✅ |
 | 2.1.5 Data modeling | [DataModeling.md](../src/BackendArchitect/Databases/SQL/DataModeling/DataModeling.md) | `FlatOrder.cs`, `Normalized.cs`, `DataModelingDemo.cs` | ✅ |
-| 2.2 NoSQL concepts | — | — | ⏳ next |
-| 2.3 Cosmos DB | — | — | ☐ |
+| 2.2 NoSQL concepts | [NoSqlConcepts.md](../src/BackendArchitect/Databases/NoSQL/Concepts/NoSqlConcepts.md) | `RelationalStore.cs`, `DocumentStore.cs`, `NoSqlConceptsDemo.cs` | ✅ |
+| 2.3 Cosmos DB | — | — | ⏳ next |
 
 ## Technologies (see roadmap tree for sub topics)
 - 1. Foundations ☐ · **2. Databases ⏳** · 3. APIs & HTTP ☐ · 4. Concurrency & Async ☐
