@@ -61,8 +61,10 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 - **2.2 NoSQL concepts** — ✅ [notes](../src/BackendArchitect/Databases/NoSQL/Concepts/NoSqlConcepts.md) · code `RelationalStore.cs`, `DocumentStore.cs`
   - 2.2.1 Document ✅ · 2.2.2 Key-value ✅ · 2.2.3 Wide-column ✅ · 2.2.4 When to use which ✅
   - Examples: normalized-vs-document read/write trade ✅ · denormalization & the update anomaly ✅ · schema-on-read ✅
-- **2.3 Cosmos DB** *(used at work)* — ⏳ next
-  - 2.3.1 Partition-key design ☐ · 2.3.2 RU/s ☐ · 2.3.3 Indexing policy ☐ · 2.3.4 Consistency levels ☐
+- **2.3 Cosmos DB** *(used at work)* — ⏳ in progress
+  - 2.3.0 **Fundamentals** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/Fundamentals/Fundamentals.md)
+    - Examples: Core-vs-compatibility APIs ✅ · Account→Database→Container→Item ✅ · partition key + id = the address ✅ · schema-on-read / no cross-container joins ✅
+  - 2.3.1 Partition-key design ⏳ next · 2.3.2 RU/s ☐ · 2.3.3 Indexing policy ☐ · 2.3.4 Consistency levels ☐
 
 ## 3. APIs & HTTP 📁 `.../Apis`
 - **3.1 HTTP** — methods ☐ · status codes ☐ · caching headers ☐ · content negotiation ☐

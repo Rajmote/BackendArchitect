@@ -13,7 +13,11 @@ Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitect
 | 2.1.4 Isolation levels | [IsolationLevels.md](../src/BackendArchitect/Databases/SQL/IsolationLevels/IsolationLevels.md) | `TicketBooth.cs`, `IsolationLevelsDemo.cs` | ✅ |
 | 2.1.5 Data modeling | [DataModeling.md](../src/BackendArchitect/Databases/SQL/DataModeling/DataModeling.md) | `FlatOrder.cs`, `Normalized.cs`, `DataModelingDemo.cs` | ✅ |
 | 2.2 NoSQL concepts | [NoSqlConcepts.md](../src/BackendArchitect/Databases/NoSQL/Concepts/NoSqlConcepts.md) | `RelationalStore.cs`, `DocumentStore.cs`, `NoSqlConceptsDemo.cs` | ✅ |
-| 2.3 Cosmos DB | — | — | ⏳ next |
+| 2.3.0 Cosmos DB — fundamentals | [Fundamentals.md](../src/BackendArchitect/Databases/Cosmos/Fundamentals/Fundamentals.md) | — (conceptual) | ✅ |
+| 2.3.1 Cosmos — partition keys | — | — | ⏳ next |
+| 2.3.2 Cosmos — RU/s | — | — | ☐ |
+| 2.3.3 Cosmos — indexing policy | — | — | ☐ |
+| 2.3.4 Cosmos — consistency levels | — | — | ☐ |
 
 ## Technologies (see roadmap tree for sub topics)
 - 1. Foundations ☐ · **2. Databases ⏳** · 3. APIs & HTTP ☐ · 4. Concurrency & Async ☐
@@ -24,4 +28,5 @@ Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitect
 | Date | What I learned / built | Next |
 |---|---|---|
 | 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
+| 2026-07-25 | §2.2 NoSQL concepts done (4 families, no-joins→scale-out, denormalize-by-default + how to handle updates to denormalized copies; normalized-vs-document demo measuring reads 200→100 and writes 1→10, 19 tests). Roadmap renamed/moved to `docs/BackendArchitectRoadmap.md`. Started §2.3 Cosmos DB — fundamentals note done | Cosmos partition keys, then RU/s, indexing policy, consistency levels |
 | 2026-07-22 | Transactions & ACID done (Bank model demonstrating all 4 ACID letters: atomicity/consistency/isolation-lock/durability-snapshot; AcidDemo + 10 tests). Removed all "SureCore" references from repo & roadmap. Added docs/BookList.md. Started Isolation Levels (Who/What/3 anomalies taught; note is WIP) | Finish Isolation Levels: the 4 levels, When/Where/How, runnable demo + tests |

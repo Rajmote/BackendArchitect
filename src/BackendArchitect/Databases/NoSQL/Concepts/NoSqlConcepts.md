@@ -113,6 +113,74 @@ Graph → relationship-first queries.
 4. **Accept duplication** — then plan *how you'll update the copies*.
 5. **Pick a partition key** that spreads load evenly (§2.3).
 
+### Handling updates to denormalized data
+*"A customer has 10 order documents carrying a copy of their name. The name changes — now what?"*
+This is **the** practical problem of document databases.
+
+**Step 0 — first ask whether the copy should change at all.** (Same insight as `Price` in
+[data modeling](../../SQL/DataModeling/DataModeling.md).)
+
+| Kind of copy | Example | Update it? |
+|---|---|---|
+| **Point-in-time fact** (snapshot) | name/address **on an invoice**, price at purchase | ❌ **No** — freeze it; the old value is *correct* |
+| **Current-state cache** (denormalized for reads) | customer name in an order-list UI | ✅ **Yes** — must be synced |
+
+> 🧠 Half of all "how do I sync this?" problems dissolve here — a 2019 invoice *should* show the 2019 name.
+
+**If it genuinely must update — five options:**
+
+| # | Option | ✅ | ❌ | Use when |
+|---|---|---|---|---|
+| 1 | **Don't denormalize** — store `customerId`, look the name up (+ app cache) | one source of truth; no sync ever | extra read / cache layer | the field changes often |
+| 2 | **Fan-out update** — rewrite all copies now | simple; **atomic** if copies share a partition key | only for small, co-located fan-out | a few copies, one partition |
+| 3 | **Change feed / event-driven** — update the source; a listener propagates | fast writes; **retries until done**; scales | eventually consistent (seconds) | large fan-out — *the standard production pattern* |
+| 4 | **Lazy / on-read repair** — cache + version, refresh on read | only pay for docs actually read | complex reads; cold docs stay stale | long tail of rarely-read docs |
+| 5 | **Scheduled reconciliation** — nightly re-sync job | cheap **safety net** | stale for up to a day alone | *alongside* option 2 or 3 |
+
+```csharp
+// Option 2 — Cosmos: if orders are partitioned by customerId, all copies live in ONE partition,
+// so they can be rewritten atomically (transactional batch, max 100 operations).
+var batch = container.CreateTransactionalBatch(new PartitionKey(customerId));
+foreach (var order in ordersForCustomer)
+{
+    order.CustomerName = newName;
+    batch.ReplaceItem(order.Id, order);
+}
+await batch.ExecuteAsync();   // all-or-nothing
+```
+
+```mermaid
+flowchart LR
+    A[Update the Customer doc<br/>= the single write] --> B[(Cosmos Change Feed)]
+    B --> C[Listener / Azure Function]
+    C --> D[Update the N order docs<br/>retried until they succeed]
+```
+
+**Choosing:**
+
+```mermaid
+flowchart TD
+    Q{Is the copy a historical<br/>point-in-time fact?} -->|Yes| F["Freeze it — do nothing ✅"]
+    Q -->|No| M{How many copies?}
+    M -->|A few, same partition| B["Option 2: transactional batch"]
+    M -->|Many / across partitions| C["Option 3: change feed"]
+    C --> S["+ Option 5 nightly reconcile as a safety net"]
+    M -->|Changes very often| P["Option 1: don't denormalize — reference it"]
+```
+
+> 🧠 **Denormalize what's read often and changes rarely; reference what changes often.**
+> A customer's *name* changes once a decade → denormalize freely.
+> A customer's *loyalty points* change hourly → reference, never copy.
+
+> ⚠️ **The trap:** a naive loop of individual writes with no retry —
+> `foreach (var o in orders) await container.ReplaceItemAsync(o);` — crashes at #4 and leaves 3
+> updated, 7 stale, **silently corrupt**. If it can fail halfway you need either **atomicity**
+> (option 2, one partition) or **retry-until-done** (option 3). That partial state *is* the update
+> anomaly, and nothing detects it for you.
+
+> 🔗 Notice how much of this hinges on the **partition key** — it decides whether a fan-out is one
+> cheap atomic batch or thousands of scattered writes. That's **§2.3 Cosmos DB**, next.
+
 ### The runnable model in this repo
 [`NoSqlConceptsDemo.cs`](NoSqlConceptsDemo.cs) runs the same two operations on a normalized store and
 a document store, counting items touched:
@@ -154,6 +222,8 @@ NoSQL = **"Not Only SQL"**: relax schemas/joins/strong consistency to buy **scal
 Four families — **document, key-value, wide-column, graph**. Dropping joins is what lets **one machine
 answer a query**, which is why it scales; the price is **denormalization** (and the update anomaly),
 **weaker transactions**, and **eventual consistency**. So you **model around access patterns, not data**.
+When a duplicated fact changes, first ask if it's a **historical snapshot** (freeze it); otherwise use a
+**transactional batch** (few copies, one partition) or the **change feed** (many copies).
 **SQL stays the sensible default.** Next: **§2.3 Cosmos DB** — partition keys, RU/s, consistency levels.
 
 ## Warm-up questions (answer out loud)
@@ -162,3 +232,5 @@ answer a query**, which is why it scales; the price is **denormalization** (and 
 3. You denormalize a customer name onto every order — what problem returns, and how is it *different*
    from eventual consistency?
 4. Give two situations where NoSQL would be the wrong choice.
+5. A customer's name is copied onto their 10 order documents and the name changes. Walk through how
+   you'd decide what to do — and why a plain `foreach` of individual writes is dangerous.
