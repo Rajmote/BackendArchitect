@@ -64,7 +64,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 - **2.3 Cosmos DB** *(used at work)* — ⏳ in progress
   - 2.3.0 **Fundamentals** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/Fundamentals/Fundamentals.md)
     - Examples: Core-vs-compatibility APIs ✅ · Account→Database→Container→Item ✅ · partition key + id = the address ✅ · schema-on-read / no cross-container joins ✅
-  - 2.3.1 Partition-key design ⏳ next · 2.3.2 RU/s ☐ · 2.3.3 Indexing policy ☐ · 2.3.4 Consistency levels ☐
+  - 2.3.1 **Partition-key design & `id`** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/PartitionKeys/PartitionKeys.md) · code `PartitionedContainer.cs`
+    - Examples: logical vs physical partitions ✅ · even spread vs hot partition (measured) ✅ · point read vs single- vs cross-partition cost ✅ · synthetic & hierarchical keys ✅
+  - 2.3.2 RU/s ⏳ next · 2.3.3 Indexing policy ☐ · 2.3.4 Consistency levels ☐
 
 ## 3. APIs & HTTP 📁 `.../Apis`
 - **3.1 HTTP** — methods ☐ · status codes ☐ · caching headers ☐ · content negotiation ☐

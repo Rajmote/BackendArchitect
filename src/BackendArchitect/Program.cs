@@ -3,6 +3,7 @@ using BackendArchitect.Databases.Sql.Transactions;
 using BackendArchitect.Databases.Sql.IsolationLevels;
 using BackendArchitect.Databases.Sql.DataModeling;
 using BackendArchitect.Databases.NoSql.Concepts;
+using BackendArchitect.Databases.Cosmos.PartitionKeys;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -22,3 +23,7 @@ new DataModelingDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Databases · NoSQL · Concepts (normalized vs document) =====");
 new NoSqlConceptsDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Databases · Cosmos · Partition keys (spread + query cost) =====");
+new PartitionKeysDemo().Run();
