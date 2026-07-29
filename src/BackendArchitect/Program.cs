@@ -4,6 +4,7 @@ using BackendArchitect.Databases.Sql.IsolationLevels;
 using BackendArchitect.Databases.Sql.DataModeling;
 using BackendArchitect.Databases.NoSql.Concepts;
 using BackendArchitect.Databases.Cosmos.PartitionKeys;
+using BackendArchitect.Databases.Cosmos.RequestUnits;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -27,3 +28,7 @@ new NoSqlConceptsDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Databases · Cosmos · Partition keys (spread + query cost) =====");
 new PartitionKeysDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Databases · Cosmos · Request Units (cost + throttling) =====");
+new RequestUnitsDemo().Run();

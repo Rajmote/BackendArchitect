@@ -15,8 +15,8 @@ Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitect
 | 2.2 NoSQL concepts | [NoSqlConcepts.md](../src/BackendArchitect/Databases/NoSQL/Concepts/NoSqlConcepts.md) | `RelationalStore.cs`, `DocumentStore.cs`, `NoSqlConceptsDemo.cs` | ✅ |
 | 2.3.0 Cosmos DB — fundamentals | [Fundamentals.md](../src/BackendArchitect/Databases/Cosmos/Fundamentals/Fundamentals.md) | — (conceptual) | ✅ |
 | 2.3.1 Cosmos — partition keys & `id` | [PartitionKeys.md](../src/BackendArchitect/Databases/Cosmos/PartitionKeys/PartitionKeys.md) | `PartitionedContainer.cs`, `PartitionKeysDemo.cs` | ✅ |
-| 2.3.2 Cosmos — RU/s | — | — | ⏳ next |
-| 2.3.3 Cosmos — indexing policy | — | — | ☐ |
+| 2.3.2 Cosmos — RU/s | [RequestUnits.md](../src/BackendArchitect/Databases/Cosmos/RequestUnits/RequestUnits.md) | `RuCost.cs`, `ThroughputBudget.cs`, `RequestUnitsDemo.cs` | ✅ |
+| 2.3.3 Cosmos — indexing policy | — | — | ⏳ next |
 | 2.3.4 Cosmos — consistency levels | — | — | ☐ |
 
 ## Technologies (see roadmap tree for sub topics)
