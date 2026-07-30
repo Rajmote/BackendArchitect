@@ -68,7 +68,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
     - Examples: logical vs physical partitions ✅ · even spread vs hot partition (measured) ✅ · point read vs single- vs cross-partition cost ✅ · synthetic & hierarchical keys ✅
   - 2.3.2 **Request Units (RU/s)** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/RequestUnits/RequestUnits.md) · code `RuCost.cs`, `ThroughputBudget.cs`
     - Examples: 1 RU anchor & cost ratios ✅ · writes ~5x reads (index maintenance) ✅ · queries priced by work not results ✅ · 429 throttling + SDK retry ✅ · provisioned/autoscale/serverless ✅
-  - 2.3.3 Indexing policy ⏳ next · 2.3.4 Consistency levels ☐
+  - 2.3.3 **Indexing policy** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/IndexingPolicy/IndexingPolicy.md) · code `IndexPolicy.cs`
+    - Examples: inverted default (`/*` indexes everything) ✅ · over- vs under-indexing U-shape, measured ✅ · included/excluded paths & wildcards ✅ · composite indexes ✅ · mutable (unlike the partition key) ✅
+  - 2.3.4 Consistency levels ⏳ next
 
 ## 3. APIs & HTTP 📁 `.../Apis`
 - **3.1 HTTP** — methods ☐ · status codes ☐ · caching headers ☐ · content negotiation ☐

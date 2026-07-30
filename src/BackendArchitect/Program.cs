@@ -5,6 +5,7 @@ using BackendArchitect.Databases.Sql.DataModeling;
 using BackendArchitect.Databases.NoSql.Concepts;
 using BackendArchitect.Databases.Cosmos.PartitionKeys;
 using BackendArchitect.Databases.Cosmos.RequestUnits;
+using BackendArchitect.Databases.Cosmos.Indexing;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -32,3 +33,7 @@ new PartitionKeysDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Databases · Cosmos · Request Units (cost + throttling) =====");
 new RequestUnitsDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Databases · Cosmos · Indexing policy (right-sizing) =====");
+new IndexingPolicyDemo().Run();
