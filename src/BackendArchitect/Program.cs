@@ -7,6 +7,7 @@ using BackendArchitect.Databases.Cosmos.PartitionKeys;
 using BackendArchitect.Databases.Cosmos.RequestUnits;
 using BackendArchitect.Databases.Cosmos.Indexing;
 using BackendArchitect.Databases.Cosmos.Consistency;
+using BackendArchitect.Apis.Http.Fundamentals;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -42,3 +43,7 @@ new IndexingPolicyDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Databases · Cosmos · Consistency levels (what each read sees) =====");
 new ConsistencyLevelsDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== APIs · HTTP · Fundamentals (safe, idempotent, retries) =====");
+new HttpFundamentalsDemo().Run();

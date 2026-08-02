@@ -20,6 +20,16 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 2.3.3 Cosmos — indexing policy | [IndexingPolicy.md](../src/BackendArchitect/Databases/Cosmos/IndexingPolicy/IndexingPolicy.md) | `IndexPolicy.cs`, `IndexingPolicyDemo.cs` | ✅ |
 | 2.3.4 Cosmos — consistency levels | [ConsistencyLevels.md](../src/BackendArchitect/Databases/Cosmos/ConsistencyLevels/ConsistencyLevels.md) | `ReplicatedStore.cs`, `ConsistencyLevelsDemo.cs` | ✅ |
 
+## Month 2 — APIs, HTTP & resilience (in progress)
+
+| Sub topic | Notes | Code | Status |
+|---|---|---|---|
+| 3.1 HTTP fundamentals | [HttpFundamentals.md](../src/BackendArchitect/Apis/Http/Fundamentals/HttpFundamentals.md) | `HttpSemantics.cs`, `IdempotentPaymentApi.cs` | ✅ |
+| 3.2 REST design & versioning | — | — | ⏳ next |
+| 3.3 gRPC | — | — | ☐ |
+| 3.4 GraphQL basics | — | — | ☐ |
+| 6.2 Resilience (retries, timeouts, circuit breakers) | — | — | ☐ |
+
 ## Revision checklist — Month 1 recall quiz (2026-08-02, 13 questions)
 
 Self-test after finishing Databases. Each topic note has its own warm-up questions at the bottom;

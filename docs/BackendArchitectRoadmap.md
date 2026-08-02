@@ -73,8 +73,10 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - 2.3.4 **Consistency levels** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/ConsistencyLevels/ConsistencyLevels.md) · code `ReplicatedStore.cs`
     - Examples: the 5 levels compared on one lagging replica ✅ · session token / read-your-own-writes ✅ · 2x read cost for Strong & Bounded ✅
 
-## 3. APIs & HTTP 📁 `.../Apis`
-- **3.1 HTTP** — methods ☐ · status codes ☐ · caching headers ☐ · content negotiation ☐
+## 3. APIs & HTTP 📁 [`src/…/Apis`](../src/BackendArchitect/Apis)
+- **3.1 HTTP fundamentals** — ✅ [notes](../src/BackendArchitect/Apis/Http/Fundamentals/HttpFundamentals.md) · code `HttpSemantics.cs`, `IdempotentPaymentApi.cs`
+  - Examples: safe vs idempotent ✅ · method choice (POST/PUT/PATCH/DELETE) ✅ · why never hide a delete behind GET ✅ · status codes are machine-readable ✅ · retry = transient status AND idempotent op ✅ · idempotency keys ✅
+  - Still to cover: caching headers ☐ · content negotiation ☐
 - **3.2 REST** — maturity model ☐ · resource design ☐ · versioning & contracts ☐
 - **3.3 gRPC** — protobuf ☐ · streaming ☐
 - **3.4 GraphQL** — basics & trade-offs ☐
