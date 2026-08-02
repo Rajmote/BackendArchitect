@@ -3,7 +3,8 @@
 Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitectRoadmap.md)
 (Technology → Main topic → Sub topic → Example). The 6-month plan drives weekly focus.
 
-## Current focus: Technology 2 — Databases (§2.1 SQL complete ✅)
+## ✅ Technology 2 — Databases: COMPLETE (Month 1 done — 44 tests green)
+Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 
 | Sub topic | Notes | Code / script | Status |
 |---|---|---|---|
@@ -17,7 +18,7 @@ Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitect
 | 2.3.1 Cosmos — partition keys & `id` | [PartitionKeys.md](../src/BackendArchitect/Databases/Cosmos/PartitionKeys/PartitionKeys.md) | `PartitionedContainer.cs`, `PartitionKeysDemo.cs` | ✅ |
 | 2.3.2 Cosmos — RU/s | [RequestUnits.md](../src/BackendArchitect/Databases/Cosmos/RequestUnits/RequestUnits.md) | `RuCost.cs`, `ThroughputBudget.cs`, `RequestUnitsDemo.cs` | ✅ |
 | 2.3.3 Cosmos — indexing policy | [IndexingPolicy.md](../src/BackendArchitect/Databases/Cosmos/IndexingPolicy/IndexingPolicy.md) | `IndexPolicy.cs`, `IndexingPolicyDemo.cs` | ✅ |
-| 2.3.4 Cosmos — consistency levels | — | — | ⏳ next (last topic of Month 1) |
+| 2.3.4 Cosmos — consistency levels | [ConsistencyLevels.md](../src/BackendArchitect/Databases/Cosmos/ConsistencyLevels/ConsistencyLevels.md) | `ReplicatedStore.cs`, `ConsistencyLevelsDemo.cs` | ✅ |
 
 ## Technologies (see roadmap tree for sub topics)
 - 1. Foundations ☐ · **2. Databases ⏳** · 3. APIs & HTTP ☐ · 4. Concurrency & Async ☐
@@ -28,5 +29,6 @@ Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitect
 | Date | What I learned / built | Next |
 |---|---|---|
 | 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
+| 2026-08-02 | **Month 1 Databases COMPLETE.** Finished Cosmos: partition keys (spread + hot-partition demo), RU/s (cost model + 429 throttling), indexing policy (over/under-indexing U-shape), consistency levels (5 levels on a lagging replica). 44 tests green | **Month 2 — APIs, HTTP & resilience** (§3, §6.2) |
 | 2026-07-25 | §2.2 NoSQL concepts done (4 families, no-joins→scale-out, denormalize-by-default + how to handle updates to denormalized copies; normalized-vs-document demo measuring reads 200→100 and writes 1→10, 19 tests). Roadmap renamed/moved to `docs/BackendArchitectRoadmap.md`. Started §2.3 Cosmos DB — fundamentals note done | Cosmos partition keys, then RU/s, indexing policy, consistency levels |
 | 2026-07-22 | Transactions & ACID done (Bank model demonstrating all 4 ACID letters: atomicity/consistency/isolation-lock/durability-snapshot; AcidDemo + 10 tests). Removed all "SureCore" references from repo & roadmap. Added docs/BookList.md. Started Isolation Levels (Who/What/3 anomalies taught; note is WIP) | Finish Isolation Levels: the 4 levels, When/Where/How, runnable demo + tests |

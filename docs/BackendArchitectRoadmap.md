@@ -70,7 +70,8 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
     - Examples: 1 RU anchor & cost ratios ✅ · writes ~5x reads (index maintenance) ✅ · queries priced by work not results ✅ · 429 throttling + SDK retry ✅ · provisioned/autoscale/serverless ✅
   - 2.3.3 **Indexing policy** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/IndexingPolicy/IndexingPolicy.md) · code `IndexPolicy.cs`
     - Examples: inverted default (`/*` indexes everything) ✅ · over- vs under-indexing U-shape, measured ✅ · included/excluded paths & wildcards ✅ · composite indexes ✅ · mutable (unlike the partition key) ✅
-  - 2.3.4 Consistency levels ⏳ next
+  - 2.3.4 **Consistency levels** — ✅ [notes](../src/BackendArchitect/Databases/Cosmos/ConsistencyLevels/ConsistencyLevels.md) · code `ReplicatedStore.cs`
+    - Examples: the 5 levels compared on one lagging replica ✅ · session token / read-your-own-writes ✅ · 2x read cost for Strong & Bounded ✅
 
 ## 3. APIs & HTTP 📁 `.../Apis`
 - **3.1 HTTP** — methods ☐ · status codes ☐ · caching headers ☐ · content negotiation ☐
@@ -120,10 +121,10 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 ~6–8 focused hours/week. Each month: one theme, a **book**, a **build**, an **at-work** application.
 Maps onto the tree above.
 
-### Month 1 — Databases (§2) — *in progress*
+### Month 1 — Databases (§2) — ✅ **COMPLETE**
 - [x] SQL indexing (§2.1.1) · [x] reading query plans (§2.1.2)
 - [x] transactions/isolation (§2.1.3–4) · [x] data modeling (§2.1.5)
-- [x] NoSQL concepts (§2.2) · [ ] Cosmos DB (§2.3)
+- [x] NoSQL concepts (§2.2) · [x] Cosmos DB (§2.3 — fundamentals, partition keys, RU/s, indexing policy, consistency levels)
 - **Build:** make a slow query / Cosmos container fast; document why · **Read:** DDIA ch. 1–4
 
 ### Month 2 — APIs, HTTP & resilience (§3, §6.2)

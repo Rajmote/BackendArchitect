@@ -6,6 +6,7 @@ using BackendArchitect.Databases.NoSql.Concepts;
 using BackendArchitect.Databases.Cosmos.PartitionKeys;
 using BackendArchitect.Databases.Cosmos.RequestUnits;
 using BackendArchitect.Databases.Cosmos.Indexing;
+using BackendArchitect.Databases.Cosmos.Consistency;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -37,3 +38,7 @@ new RequestUnitsDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Databases · Cosmos · Indexing policy (right-sizing) =====");
 new IndexingPolicyDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Databases · Cosmos · Consistency levels (what each read sees) =====");
+new ConsistencyLevelsDemo().Run();
