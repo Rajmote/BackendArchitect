@@ -77,7 +77,8 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 - **3.1 HTTP fundamentals** — ✅ [notes](../src/BackendArchitect/Apis/Http/Fundamentals/HttpFundamentals.md) · code `HttpSemantics.cs`, `IdempotentPaymentApi.cs`
   - Examples: safe vs idempotent ✅ · method choice (POST/PUT/PATCH/DELETE) ✅ · why never hide a delete behind GET ✅ · status codes are machine-readable ✅ · retry = transient status AND idempotent op ✅ · idempotency keys ✅
   - Still to cover: caching headers ☐ · content negotiation ☐
-- **3.2 REST** — maturity model ☐ · resource design ☐ · versioning & contracts ☐
+- **3.2 REST design & versioning** — ✅ [notes](../src/BackendArchitect/Apis/Rest/Design/RestDesign.md) · code `ResourceUrl.cs`, `ApiChange.cs`, `VersionedOrderApi.cs`
+  - Examples: RPC→REST URL redesign ✅ · Richardson maturity (target L2) ✅ · 201+Location ✅ · breaking vs additive change classifier ✅ · expand→migrate→contract ✅ · 4 versioning strategies + N-1/Sunset ✅
 - **3.3 gRPC** — protobuf ☐ · streaming ☐
 - **3.4 GraphQL** — basics & trade-offs ☐
 

@@ -25,8 +25,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | Sub topic | Notes | Code | Status |
 |---|---|---|---|
 | 3.1 HTTP fundamentals | [HttpFundamentals.md](../src/BackendArchitect/Apis/Http/Fundamentals/HttpFundamentals.md) | `HttpSemantics.cs`, `IdempotentPaymentApi.cs` | ✅ |
-| 3.2 REST design & versioning | — | — | ⏳ next |
-| 3.3 gRPC | — | — | ☐ |
+| 3.2 REST design & versioning | [RestDesign.md](../src/BackendArchitect/Apis/Rest/Design/RestDesign.md) | `ResourceUrl.cs`, `ApiChange.cs`, `VersionedOrderApi.cs` | ✅ |
+| 3.3 gRPC | — | — | ⏳ next |
 | 3.4 GraphQL basics | — | — | ☐ |
 | 6.2 Resilience (retries, timeouts, circuit breakers) | — | — | ☐ |
 

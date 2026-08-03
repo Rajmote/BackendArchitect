@@ -8,6 +8,7 @@ using BackendArchitect.Databases.Cosmos.RequestUnits;
 using BackendArchitect.Databases.Cosmos.Indexing;
 using BackendArchitect.Databases.Cosmos.Consistency;
 using BackendArchitect.Apis.Http.Fundamentals;
+using BackendArchitect.Apis.Rest.Design;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -47,3 +48,7 @@ new ConsistencyLevelsDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== APIs · HTTP · Fundamentals (safe, idempotent, retries) =====");
 new HttpFundamentalsDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== APIs · REST · Design & versioning =====");
+new RestDesignDemo().Run();
