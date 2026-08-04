@@ -26,8 +26,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 |---|---|---|---|
 | 3.1 HTTP fundamentals | [HttpFundamentals.md](../src/BackendArchitect/Apis/Http/Fundamentals/HttpFundamentals.md) | `HttpSemantics.cs`, `IdempotentPaymentApi.cs` | ✅ |
 | 3.2 REST design & versioning | [RestDesign.md](../src/BackendArchitect/Apis/Rest/Design/RestDesign.md) | `ResourceUrl.cs`, `ApiChange.cs`, `VersionedOrderApi.cs` | ✅ |
-| 3.3 gRPC | — | — | ⏳ next |
-| 3.4 GraphQL basics | — | — | ☐ |
+| 3.3 gRPC | [Grpc.md](../src/BackendArchitect/Apis/Grpc/Contracts/Grpc.md) | `ProtoSchema.cs`, `ProtoCodec.cs`, `DeadlineBudget.cs` | ✅ |
+| 3.4 GraphQL basics | — | — | ⏳ next |
 | 6.2 Resilience (retries, timeouts, circuit breakers) | — | — | ☐ |
 
 ## Revision checklist — Month 1 recall quiz (2026-08-02, 13 questions)
@@ -61,6 +61,7 @@ machine answers → scale) · partition key + id = point read · 429 surfaces as
 | Date | What I learned / built | Next |
 |---|---|---|
 | 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
+| 2026-08-04 | Month 2: §3.1 HTTP fundamentals, §3.2 REST design & versioning, §3.3 gRPC — 98 tests green | §3.4 GraphQL, then §6.2 resilience |
 | 2026-08-02 | Recall quiz on all of Month 1 (13 questions, one at a time) — see the revision checklist above: 8 solid, 5 to revisit | Month 2 |
 | 2026-08-02 | **Month 1 Databases COMPLETE.** Finished Cosmos: partition keys (spread + hot-partition demo), RU/s (cost model + 429 throttling), indexing policy (over/under-indexing U-shape), consistency levels (5 levels on a lagging replica). 44 tests green | **Month 2 — APIs, HTTP & resilience** (§3, §6.2) |
 | 2026-07-25 | §2.2 NoSQL concepts done (4 families, no-joins→scale-out, denormalize-by-default + how to handle updates to denormalized copies; normalized-vs-document demo measuring reads 200→100 and writes 1→10, 19 tests). Roadmap renamed/moved to `docs/BackendArchitectRoadmap.md`. Started §2.3 Cosmos DB — fundamentals note done | Cosmos partition keys, then RU/s, indexing policy, consistency levels |

@@ -79,7 +79,8 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - Still to cover: caching headers ☐ · content negotiation ☐
 - **3.2 REST design & versioning** — ✅ [notes](../src/BackendArchitect/Apis/Rest/Design/RestDesign.md) · code `ResourceUrl.cs`, `ApiChange.cs`, `VersionedOrderApi.cs`
   - Examples: RPC→REST URL redesign ✅ · Richardson maturity (target L2) ✅ · 201+Location ✅ · breaking vs additive change classifier ✅ · expand→migrate→contract ✅ · 4 versioning strategies + N-1/Sunset ✅
-- **3.3 gRPC** — protobuf ☐ · streaming ☐
+- **3.3 gRPC** — ✅ [notes](../src/BackendArchitect/Apis/Grpc/Contracts/Grpc.md) · code `ProtoSchema.cs`, `ProtoCodec.cs`, `DeadlineBudget.cs`
+  - Examples: protobuf field numbers are the contract (rename free, renumber breaks, reuse corrupts → `reserved`) ✅ · wire size vs JSON ✅ · the 4 call types incl. streaming ✅ · deadline propagation prevents zombie work ✅ · when gRPC vs REST ✅
 - **3.4 GraphQL** — basics & trade-offs ☐
 
 ## 4. Concurrency & Async 📁 `.../Concurrency`
