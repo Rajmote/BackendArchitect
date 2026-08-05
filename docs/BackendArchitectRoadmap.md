@@ -81,7 +81,8 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - Examples: RPC→REST URL redesign ✅ · Richardson maturity (target L2) ✅ · 201+Location ✅ · breaking vs additive change classifier ✅ · expand→migrate→contract ✅ · 4 versioning strategies + N-1/Sunset ✅
 - **3.3 gRPC** — ✅ [notes](../src/BackendArchitect/Apis/Grpc/Contracts/Grpc.md) · code `ProtoSchema.cs`, `ProtoCodec.cs`, `DeadlineBudget.cs`
   - Examples: protobuf field numbers are the contract (rename free, renumber breaks, reuse corrupts → `reserved`) ✅ · wire size vs JSON ✅ · the 4 call types incl. streaming ✅ · deadline propagation prevents zombie work ✅ · when gRPC vs REST ✅
-- **3.4 GraphQL** — basics & trade-offs ☐
+- **3.4 GraphQL** — ✅ [notes](../src/BackendArchitect/Apis/GraphQL/Basics/GraphQlBasics.md) · code `FetchComparison.cs`, `ResolverEngine.cs`, `QueryGuard.cs`
+  - Examples: over- vs under-fetching measured ✅ · N+1 resolvers and DataLoader batching ✅ · depth/complexity/pagination guards ✅ · 200-with-errors & partial success ✅ · GraphQL vs MongoDB (different tiers) ✅ · when REST is the better call ✅
 
 ## 4. Concurrency & Async 📁 `.../Concurrency`
 - **4.1 async/await internals** ☐ · **4.2 Task / Channel / IAsyncEnumerable** ☐

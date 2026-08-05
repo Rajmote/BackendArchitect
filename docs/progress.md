@@ -27,8 +27,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 3.1 HTTP fundamentals | [HttpFundamentals.md](../src/BackendArchitect/Apis/Http/Fundamentals/HttpFundamentals.md) | `HttpSemantics.cs`, `IdempotentPaymentApi.cs` | ✅ |
 | 3.2 REST design & versioning | [RestDesign.md](../src/BackendArchitect/Apis/Rest/Design/RestDesign.md) | `ResourceUrl.cs`, `ApiChange.cs`, `VersionedOrderApi.cs` | ✅ |
 | 3.3 gRPC | [Grpc.md](../src/BackendArchitect/Apis/Grpc/Contracts/Grpc.md) | `ProtoSchema.cs`, `ProtoCodec.cs`, `DeadlineBudget.cs` | ✅ |
-| 3.4 GraphQL basics | — | — | ⏳ next |
-| 6.2 Resilience (retries, timeouts, circuit breakers) | — | — | ☐ |
+| 3.4 GraphQL basics | [GraphQlBasics.md](../src/BackendArchitect/Apis/GraphQL/Basics/GraphQlBasics.md) | `FetchComparison.cs`, `ResolverEngine.cs`, `QueryGuard.cs` | ✅ |
+| 6.2 Resilience (retries, timeouts, circuit breakers) | — | — | ⏳ next (last of Month 2) |
 
 ## Revision checklist — Month 1 recall quiz (2026-08-02, 13 questions)
 

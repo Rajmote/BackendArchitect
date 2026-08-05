@@ -10,6 +10,7 @@ using BackendArchitect.Databases.Cosmos.Consistency;
 using BackendArchitect.Apis.Http.Fundamentals;
 using BackendArchitect.Apis.Rest.Design;
 using BackendArchitect.Apis.Grpc.Contracts;
+using BackendArchitect.Apis.GraphQL.Basics;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -57,3 +58,7 @@ new RestDesignDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== APIs · gRPC · Contracts, compatibility & deadlines =====");
 new GrpcDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== APIs · GraphQL · Basics (fetching, N+1, query limits) =====");
+new GraphQlDemo().Run();
