@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BackendArchitect.Practice</RootNamespace>
+  </PropertyGroup>
+
+</Project>

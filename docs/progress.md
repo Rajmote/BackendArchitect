@@ -1,5 +1,9 @@
 # Progress log
 
+> **Each topic runs Theory → Quiz → Coding.** Coding exercises live in
+> [`../practice/`](../practice/README.md) — briefs plus starter tests, with the rest written by hand.
+> Practice tests are part of CI: **red = work to do, green = done.**
+
 Structure and priorities live in [`BackendArchitectRoadmap.md`](BackendArchitectRoadmap.md)
 (Technology → Main topic → Sub topic → Example). The 6-month plan drives weekly focus.
 

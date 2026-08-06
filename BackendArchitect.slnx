@@ -5,4 +5,8 @@
   <Folder Name="/tests/">
     <Project Path="tests/BackendArchitect.Tests/BackendArchitect.Tests.csproj" />
   </Folder>
+  <Folder Name="/practice/">
+    <Project Path="practice/BackendArchitect.Practice/BackendArchitect.Practice.csproj" />
+    <Project Path="practice/BackendArchitect.Practice.Tests/BackendArchitect.Practice.Tests.csproj" />
+  </Folder>
 </Solution>
