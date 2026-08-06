@@ -39,4 +39,17 @@ dotnet test BackendArchitect.slnx -c Release
 
 | # | Topic | Brief | Status |
 |---|---|---|---|
-| 01 | §3.1 HTTP — idempotency keys | [Exercise01-IdempotencyKeys.md](Exercise01-IdempotencyKeys.md) | ⏳ not started |
+| 01 | §3.1 HTTP — idempotency keys | [Exercise01-IdempotencyKeys.md](Exercise01-IdempotencyKeys.md) | ✅ done & reviewed (14 tests) |
+
+### Review takeaways — Exercise 01
+- **Core idempotency logic was correct first time** (charge → store under key → replay).
+- `NotImplementedException` means *"not written yet"* — for a bad request, **return a failed result**
+  (the record's `Succeeded`/`Error` fields exist for exactly that) and let it map to an HTTP 400.
+- A **replay is a success** — `WasReplayed` conveys it, so `Error` must stay `null`.
+- `Dictionary` + `TryGetValue`-then-charge is **check-then-act**: two retries both charge. A `lock`
+  must cover the lookup, the store, **and both counters**.
+- **Validate before taking the lock**, and give each failure its **own message**.
+- An empty test **passes** — a false green is worse than a red. Use `Assert.Fail` or `[Fact(Skip)]`.
+- A concurrency test needs **real threads + a `Barrier`** so every call is genuinely simultaneous
+  (`Parallel.For` + `Barrier` can deadlock — the pool may not run all iterations at once).
+- **Verify the test can fail:** removing the lock must turn it red, otherwise it proves nothing.
