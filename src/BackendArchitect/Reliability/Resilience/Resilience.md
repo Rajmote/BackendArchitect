@@ -125,23 +125,85 @@ Recommendations: max  5   ← it hangs? only 5 threads stuck; checkout unaffecte
 Serve a **cached** value, a **default**, or a **partial** response. "Recommendations unavailable" while
 checkout still works is worth infinitely more than an error page.
 
-## 7. Composing them — order matters
+## 7. Polly — the real library
+
+In .NET you don't hand-roll these; you use **Polly** (v8+). Code: [`PollyPipelines.cs`](PollyPipelines.cs) ·
+[`PollyDemo.cs`](PollyDemo.cs) · fake dependency [`FlakyPaymentGateway.cs`](FlakyPaymentGateway.cs).
+
+```bash
+dotnet add package Polly
+```
+
+Polly v8 builds a **resilience pipeline**; strategies wrap the call **outside-in, in the order added**.
+
+### Retry — note the one line people forget
 ```csharp
-var pipeline = new ResiliencePipelineBuilder<HttpResponseMessage>()
-    .AddTimeout(TimeSpan.FromSeconds(10))    // 1. overall budget for ALL attempts
-    .AddRetry(new() { MaxRetryAttempts = 3,
-                      BackoffType = DelayBackoffType.Exponential,
-                      UseJitter = true })    // 2. retries
-    .AddCircuitBreaker(new() { FailureRatio = 0.5,
-                               BreakDuration = TimeSpan.FromSeconds(30) })  // 3. breaker
-    .AddTimeout(TimeSpan.FromSeconds(3))     // 4. per-ATTEMPT timeout
+new ResiliencePipelineBuilder()
+    .AddRetry(new RetryStrategyOptions
+    {
+        ShouldHandle = new PredicateBuilder().Handle<GatewayUnavailableException>(),
+        MaxRetryAttempts = 3,                        // cap it
+        Delay = TimeSpan.FromMilliseconds(50),
+        BackoffType = DelayBackoffType.Exponential,  // 50ms, 100ms, 200ms
+        UseJitter = true,                            // <- avoids the thundering herd
+        OnRetry = args => { /* AttemptNumber is 0-BASED */ return default; },
+    })
     .Build();
 ```
-Read it outside-in: an overall budget, inside which we retry, each attempt passing through the breaker,
-each try bounded by its own timeout.
 
-> ⚠️ Wrong order gives nonsense — a per-try timeout placed *outside* the retry cancels everything before
-> your "3 retries" can happen.
+### Circuit breaker — compare it with what we built by hand
+```csharp
+.AddCircuitBreaker(new CircuitBreakerStrategyOptions
+{
+    FailureRatio = 0.5,                             // = our _failureRatio
+    MinimumThroughput = 4,                          // = our _sampleSize (enough evidence first)
+    SamplingDuration = TimeSpan.FromSeconds(10),    // = our rolling window, but time-based
+    BreakDuration = TimeSpan.FromSeconds(30),       // = our _breakDuration
+    OnOpened = ..., OnHalfOpened = ..., OnClosed = ...,
+})
+```
+Almost exactly the model from Exercise 02 — Polly's window is *time*-based rather than *count*-based, and
+it raises **`BrokenCircuitException`** when it rejects a call.
+
+### The full pipeline
+```csharp
+new ResiliencePipelineBuilder<string>()
+    .AddFallback(...)                            // 1. outermost: always return something
+    .AddTimeout(TimeSpan.FromSeconds(2))         // 2. overall budget for ALL attempts
+    .AddRetry(...)                               // 3. retries
+    .AddCircuitBreaker(...)                      // 4. breaker, per attempt
+    .AddTimeout(TimeSpan.FromMilliseconds(500))  // 5. innermost: per-ATTEMPT timeout
+    .Build();
+```
+Read outside-in: *always return something*, within an overall budget, inside which we retry, each
+attempt passing through the breaker, each try bounded by its own timeout.
+
+> ⚠️ **Order matters.** A per-try timeout placed *outside* the retry cancels everything before your
+> "3 retries" can happen.
+
+```
+Retry (3 attempts, exponential + jitter) against a gateway that fails twice:
+    call failed -> retry 1 in 43ms (jittered)
+    call failed -> retry 2 in 91ms (jittered)
+  result: charged on call 3  (gateway hit 3 times)
+
+Circuit breaker (50% failures over >=4 calls, 500ms break) against a dead gateway:
+  call 3: failed at the gateway
+    breaker OPENED for 500ms
+  call 5: REJECTED by the breaker (gateway not called)
+  -> 6 calls made, gateway was only hit 4 times
+
+The full pipeline (fallback > timeout > retry > breaker > per-try timeout):
+  flaky gateway  : charged on call 3
+  dead gateway   : payment queued for later
+  -> the caller always gets an answer; it never sees an exception
+```
+
+`43ms` and `91ms` instead of a clean 50/100 is jitter doing its job. And "6 calls made, gateway hit 4
+times" is the breaker shielding a sick dependency.
+
+> 🧠 **Build one by hand to understand it; use Polly in production.** Polly also handles async, telemetry,
+> `DI`/`HttpClient` integration (`AddStandardResilienceHandler`), and the edge cases you'd get wrong.
 
 ## 8. The runnable model in this repo
 ```powershell

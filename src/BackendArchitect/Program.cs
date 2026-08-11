@@ -67,3 +67,7 @@ new GraphQlDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Reliability · Resilience (retries, breakers, bulkheads) =====");
 new ResilienceDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Reliability · Resilience with Polly (the real library) =====");
+new PollyDemo().Run();
