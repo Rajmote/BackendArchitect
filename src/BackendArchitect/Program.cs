@@ -11,6 +11,7 @@ using BackendArchitect.Apis.Http.Fundamentals;
 using BackendArchitect.Apis.Rest.Design;
 using BackendArchitect.Apis.Grpc.Contracts;
 using BackendArchitect.Apis.GraphQL.Basics;
+using BackendArchitect.Reliability.Resilience;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -62,3 +63,7 @@ new GrpcDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== APIs · GraphQL · Basics (fetching, N+1, query limits) =====");
 new GraphQlDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Reliability · Resilience (retries, breakers, bulkheads) =====");
+new ResilienceDemo().Run();
