@@ -1,5 +1,7 @@
 # Progress log
 
+> Docs: [roadmap](BackendArchitectRoadmap.md) · [books](BookList.md) · [dependencies](Dependencies.md)
+>
 > **Each topic runs Theory → Quiz → Coding.** Coding exercises live in
 > [`../practice/`](../practice/README.md) — briefs plus starter tests, with the rest written by hand.
 > Practice tests are part of CI: **red = work to do, green = done.**

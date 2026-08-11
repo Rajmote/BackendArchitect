@@ -44,3 +44,7 @@ Tracked in [`docs/progress.md`](docs/progress.md). Tick the roadmap boxes as top
 ## Books
 
 Curated reading list covering every roadmap topic: [`docs/BookList.md`](docs/BookList.md).
+
+## Dependencies
+
+Every NuGet package and the reason it's there: [`docs/Dependencies.md`](docs/Dependencies.md).
