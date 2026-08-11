@@ -95,7 +95,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 
 ## 6. Performance & Reliability 📁 `.../Reliability`
 - **6.1 Profiling & benchmarking** — BenchmarkDotNet, measure first ☐
-- **6.2 Resilience** — retries ☐ · timeouts ☐ · circuit breakers ☐ · backpressure ☐ · idempotency ☐
+- **6.2 Resilience** — ✅ [notes](../src/BackendArchitect/Reliability/Resilience/Resilience.md) · code `RetryPolicy.cs`, `CircuitBreaker.cs`, `Bulkhead.cs`
+  - Examples: slow-vs-down cascading failure ✅ · timeouts (HttpClient's 100s default) ✅ · retry amplification + backoff + **jitter** (1 vs 618 distinct retry moments) ✅ · circuit breaker Closed→Open→Half-Open ✅ · bulkhead isolation ✅ · fallback ✅ · Polly pipeline ordering ✅
+  - Practice: [Exercise 02 — build a circuit breaker](../practice/Exercise02-CircuitBreaker.md)
 - **6.3 Networking** — TCP/IP ☐ · TLS ☐ · DNS ☐ · load balancing ☐
 
 ## 7. Cloud & Infrastructure 📁 `.../Cloud`

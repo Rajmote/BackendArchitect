@@ -40,6 +40,7 @@ dotnet test BackendArchitect.slnx -c Release
 | # | Topic | Brief | Status |
 |---|---|---|---|
 | 01 | §3.1 HTTP — idempotency keys | [Exercise01-IdempotencyKeys.md](Exercise01-IdempotencyKeys.md) | ✅ done & reviewed (14 tests) |
+| 02 | §6.2 Resilience — circuit breaker | [Exercise02-CircuitBreaker.md](Exercise02-CircuitBreaker.md) | 🔴 in progress (3 red) |
 
 ### Review takeaways — Exercise 01
 - **Core idempotency logic was correct first time** (charge → store under key → replay).

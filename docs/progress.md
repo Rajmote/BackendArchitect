@@ -24,7 +24,9 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 2.3.3 Cosmos — indexing policy | [IndexingPolicy.md](../src/BackendArchitect/Databases/Cosmos/IndexingPolicy/IndexingPolicy.md) | `IndexPolicy.cs`, `IndexingPolicyDemo.cs` | ✅ |
 | 2.3.4 Cosmos — consistency levels | [ConsistencyLevels.md](../src/BackendArchitect/Databases/Cosmos/ConsistencyLevels/ConsistencyLevels.md) | `ReplicatedStore.cs`, `ConsistencyLevelsDemo.cs` | ✅ |
 
-## Month 2 — APIs, HTTP & resilience (in progress)
+## ✅ Month 2 — APIs, HTTP & resilience: COMPLETE (127 reference tests green)
+Next: **Month 3 — Concurrency & observability** (§4 and §5.1). Outstanding: Exercise 02 (circuit breaker).
+
 
 | Sub topic | Notes | Code | Status |
 |---|---|---|---|
@@ -32,7 +34,7 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 3.2 REST design & versioning | [RestDesign.md](../src/BackendArchitect/Apis/Rest/Design/RestDesign.md) | `ResourceUrl.cs`, `ApiChange.cs`, `VersionedOrderApi.cs` | ✅ |
 | 3.3 gRPC | [Grpc.md](../src/BackendArchitect/Apis/Grpc/Contracts/Grpc.md) | `ProtoSchema.cs`, `ProtoCodec.cs`, `DeadlineBudget.cs` | ✅ |
 | 3.4 GraphQL basics | [GraphQlBasics.md](../src/BackendArchitect/Apis/GraphQL/Basics/GraphQlBasics.md) | `FetchComparison.cs`, `ResolverEngine.cs`, `QueryGuard.cs` | ✅ |
-| 6.2 Resilience (retries, timeouts, circuit breakers) | — | — | ⏳ next (last of Month 2) |
+| 6.2 Resilience (retries, timeouts, circuit breakers) | [Resilience.md](../src/BackendArchitect/Reliability/Resilience/Resilience.md) | `RetryPolicy.cs`, `CircuitBreaker.cs`, `Bulkhead.cs` | ✅ |
 
 ## Revision checklist — Month 1 recall quiz (2026-08-02, 13 questions)
 
