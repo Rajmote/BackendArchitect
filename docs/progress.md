@@ -38,6 +38,7 @@ Next: **Month 3 — Concurrency & observability** (§4 and §5.1). Outstanding: 
 | 3.4 GraphQL basics | [GraphQlBasics.md](../src/BackendArchitect/Apis/GraphQL/Basics/GraphQlBasics.md) | `FetchComparison.cs`, `ResolverEngine.cs`, `QueryGuard.cs` | ✅ |
 | 6.2 Resilience (retries, timeouts, circuit breakers) | [Resilience.md](../src/BackendArchitect/Reliability/Resilience/Resilience.md) | `RetryPolicy.cs`, `CircuitBreaker.cs`, `Bulkhead.cs` | ✅ |
 | 6.2b Resilience with **Polly** (v8 pipelines) | same note, §7 | `PollyPipelines.cs`, `PollyDemo.cs` | ✅ |
+| 6.2c Resilience in **production** (DI + HttpClient) | same note, §8 | `Production/PaymentApiClient.cs`, `ResilienceRegistration.cs` | ✅ |
 
 ## Revision checklist — Month 1 recall quiz (2026-08-02, 13 questions)
 

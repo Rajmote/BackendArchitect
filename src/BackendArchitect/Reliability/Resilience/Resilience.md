@@ -202,8 +202,78 @@ The full pipeline (fallback > timeout > retry > breaker > per-try timeout):
 `43ms` and `91ms` instead of a clean 50/100 is jitter doing its job. And "6 calls made, gateway hit 4
 times" is the breaker shielding a sick dependency.
 
-> 🧠 **Build one by hand to understand it; use Polly in production.** Polly also handles async, telemetry,
-> `DI`/`HttpClient` integration (`AddStandardResilienceHandler`), and the edge cases you'd get wrong.
+> 🧠 **Build one by hand to understand it; use Polly in production.**
+
+## 8. How it's *really* wired in production
+
+Even `pipeline.Execute(...)` at every call site is not the production shape. In a real app, resilience is
+**infrastructure configuration**: declared once in DI, attached to the `HttpClient`, so your business
+code contains **zero** resilience code.
+
+```bash
+dotnet add package Microsoft.Extensions.Http.Resilience
+```
+
+**The client** ([`Production/PaymentApiClient.cs`](Production/PaymentApiClient.cs)) — look how boring it is:
+```csharp
+public async Task<PaymentReceipt?> ChargeAsync(PaymentRequest request, CancellationToken ct = default)
+{
+    var response = await _http.PostAsJsonAsync("/payments", request, ct);   // one plain call
+    response.EnsureSuccessStatusCode();
+    return await response.Content.ReadFromJsonAsync<PaymentReceipt>(ct);
+}
+```
+No retry loop, no breaker, no try/catch. **That's the goal.**
+
+**The wiring** ([`Production/ResilienceRegistration.cs`](Production/ResilienceRegistration.cs)):
+```csharp
+services.AddHttpClient<PaymentApiClient>(c => c.BaseAddress = options.BaseAddress)
+        .AddStandardResilienceHandler(r =>
+        {
+            r.Retry.MaxRetryAttempts = 3;
+            r.Retry.BackoffType = DelayBackoffType.Exponential;
+            r.Retry.UseJitter = true;
+            r.CircuitBreaker.FailureRatio = 0.5;
+            r.AttemptTimeout.Timeout = TimeSpan.FromSeconds(2);      // bounds ONE try
+            r.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(30); // budget INCLUDING retries
+        });
+```
+
+`AddStandardResilienceHandler()` gives you Microsoft's recommended pipeline, **already correctly ordered**:
+```
+rate limiter → total timeout → retry → circuit breaker → attempt timeout
+```
+
+> ⚠️ Its options are **validated at startup** — e.g. `SamplingDuration` must be ≥ 2 × `AttemptTimeout`.
+> Misconfiguration fails fast at boot rather than mysteriously at 3am.
+
+**For non-HTTP work** (a database call, a queue publish), register a **named pipeline** and inject
+`ResiliencePipelineProvider<string>`:
+```csharp
+services.AddResiliencePipeline("database", b => b.AddRetry(...).AddTimeout(TimeSpan.FromSeconds(5)));
+```
+
+**Testing it** — swap the innermost handler for a fake server; every strategy above it still runs
+([`Production/FlakyServerHandler.cs`](Production/FlakyServerHandler.cs)):
+```csharp
+services.ConfigureHttpClientDefaults(b => b.ConfigurePrimaryHttpMessageHandler(() => fakeServer));
+```
+```
+  caller sees      : success, payment pay-3
+  server received  : 3 requests (1 original + 2 retries)
+  -> the caller never knew anything went wrong
+```
+And a `400` is **not** retried (1 request only) while a `503` is — the transient-vs-permanent rule from
+§3.1, enforced by the library for free.
+
+### The three layers in this folder
+| Layer | Files | Purpose |
+|---|---|---|
+| 🔨 **Hand-rolled** | `CircuitBreaker.cs`, `RetryPolicy.cs`, `Bulkhead.cs` | understand the mechanism |
+| 📦 **The library** | `PollyPipelines.cs` | the real API, explicitly invoked |
+| 🏭 **Production** | `Production/` | DI + HttpClient; business code stays clean |
+
+> 🧠 **Learn layer 1. Ship layer 3.**
 
 ## 8. The runnable model in this repo
 ```powershell

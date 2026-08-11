@@ -27,7 +27,24 @@ BackendArchitect/
 └── docs/progress.md                            # progress log
 ```
 
-Currently filled: `Databases/SQL/Indexing/` and `Databases/SQL/QueryPlans/`.
+### Two layers per concept
+
+Where a proven library exists, each concept is built **twice**:
+
+1. 🔨 **Hand-rolled** — written from scratch, so you understand the mechanism
+2. 🏭 **Production** — the tested package an architect would actually ship, in a `Production/` sub-folder
+
+```
+Reliability/Resilience/
+├── CircuitBreaker.cs · RetryPolicy.cs · Bulkhead.cs   🔨 how it works
+├── PollyPipelines.cs                                  📦 the real library
+└── Production/                                        🏭 DI + HttpClient, zero resilience code in the client
+```
+
+Concepts with no library equivalent (indexing, ACID, normalisation, partition keys) have the first layer
+only. Every package and its justification is recorded in [`docs/Dependencies.md`](docs/Dependencies.md).
+
+> 🧠 **Learn layer 1. Ship layer 3.**
 
 ## Build / test / run
 

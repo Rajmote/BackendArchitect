@@ -16,12 +16,17 @@ Last verified: **2026-08-08** · target framework **net10.0**
 
 | Package | Version | Why it's here |
 |---|---|---|
-| **Polly** | 8.7.0 | The .NET standard for **resilience**: retries with backoff + jitter, circuit breakers, timeouts, fallbacks, and pipeline composition. Used by §6.2 to show the real library alongside our hand-rolled `CircuitBreaker`/`RetryPolicy`, so the study repo teaches both *how it works* and *what you'd actually ship*. |
+| **Polly** | 8.7.0 | The .NET standard for **resilience**: retries with backoff + jitter, circuit breakers, timeouts, fallbacks, pipeline composition. §6.2 uses it beside our hand-rolled `CircuitBreaker`/`RetryPolicy` so the repo teaches both *how it works* and *what you'd ship*. |
+| **Microsoft.Extensions.Http.Resilience** | 10.8.0 | Microsoft's official integration of Polly with `HttpClient` + DI. Provides `AddStandardResilienceHandler()`, which is **how resilience is actually applied in production** — attached to the client in startup so business code contains none of it. Pulls in `Microsoft.Extensions.Http` and `Polly.Extensions`. |
 
-**That's the only runtime dependency in the whole repo**, and deliberately so: every other example
-(indexing, transactions, isolation, partition keys, RU costing, HTTP semantics, protobuf compatibility,
-GraphQL fetching) is modelled with plain BCL types. Simulating a concept in ~60 lines teaches more than
-wiring up a real client, runs offline, and executes in milliseconds.
+Those two are the **only** runtime dependencies, and deliberately so: every other example (indexing,
+transactions, isolation, partition keys, RU costing, HTTP semantics, protobuf compatibility, GraphQL
+fetching) is modelled with plain BCL types. Simulating a concept in ~60 lines teaches more than wiring
+up a real client, runs offline, and executes in milliseconds.
+
+> 🧠 **Both packages exist to serve the repo's two-layer rule:** each concept is built **by hand** to
+> understand the mechanism, then shown with the **proven package** an architect would really use. See
+> `Reliability/Resilience/` — hand-rolled files, then `PollyPipelines.cs`, then `Production/`.
 
 ### `practice/BackendArchitect.Practice`
 No packages. Exercises are solved with the BCL only — the point is to write the mechanism yourself.

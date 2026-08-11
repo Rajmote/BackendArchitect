@@ -29,19 +29,28 @@ public class PollyPipelineTests
     }
 
     [Fact]
-    public void Retry_UsesJitter_SoDelaysDiffer()
+    public void Retry_UsesJitter_SoTheSameAttemptWaitsADifferentAmountEachRun()
     {
-        var delays = new List<TimeSpan>();
-        var pipeline = PollyPipelines.Retry((_, delay) => delays.Add(delay));
-        var gateway = new FlakyPaymentGateway(failuresBeforeRecovery: int.MaxValue);
+        // NOTE: jitter does NOT guarantee the delays grow monotonically within one run — a jittered
+        // attempt 2 can legitimately be shorter than attempt 1. The property jitter DOES guarantee is
+        // that the *same* attempt differs between runs, which is what stops clients retrying in lockstep.
+        var firstDelayPerRun = new List<TimeSpan>();
 
-        try { pipeline.Execute(() => gateway.AlwaysFail()); }
-        catch (GatewayUnavailableException) { /* expected */ }
+        for (var run = 0; run < 3; run++)
+        {
+            var delays = new List<TimeSpan>();
+            var pipeline = PollyPipelines.Retry((_, delay) => delays.Add(delay));
+            var gateway = new FlakyPaymentGateway(failuresBeforeRecovery: int.MaxValue);
 
-        Assert.Equal(3, delays.Count);
-        Assert.True(delays[1] > delays[0], "exponential: each wait should grow");
-        // With jitter the values are not the exact 50/100/200 powers of two.
-        Assert.DoesNotContain(delays, d => d == TimeSpan.FromMilliseconds(50));
+            try { pipeline.Execute(() => gateway.AlwaysFail()); }
+            catch (GatewayUnavailableException) { /* expected */ }
+
+            Assert.Equal(3, delays.Count);      // capped at MaxRetryAttempts
+            firstDelayPerRun.Add(delays[0]);
+        }
+
+        Assert.True(firstDelayPerRun.Distinct().Count() > 1,
+            $"jitter should vary the delay between runs; got {string.Join(", ", firstDelayPerRun)}");
     }
 
     [Fact]

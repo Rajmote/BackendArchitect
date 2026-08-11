@@ -12,6 +12,7 @@ using BackendArchitect.Apis.Rest.Design;
 using BackendArchitect.Apis.Grpc.Contracts;
 using BackendArchitect.Apis.GraphQL.Basics;
 using BackendArchitect.Reliability.Resilience;
+using BackendArchitect.Reliability.Resilience.Production;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -71,3 +72,7 @@ new ResilienceDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Reliability · Resilience with Polly (the real library) =====");
 new PollyDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Reliability · Resilience the production way (DI + HttpClient) =====");
+new ProductionResilienceDemo().Run();
