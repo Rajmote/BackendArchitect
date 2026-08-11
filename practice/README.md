@@ -40,7 +40,21 @@ dotnet test BackendArchitect.slnx -c Release
 | # | Topic | Brief | Status |
 |---|---|---|---|
 | 01 | §3.1 HTTP — idempotency keys | [Exercise01-IdempotencyKeys.md](Exercise01-IdempotencyKeys.md) | ✅ done & reviewed (14 tests) |
-| 02 | §6.2 Resilience — circuit breaker | [Exercise02-CircuitBreaker.md](Exercise02-CircuitBreaker.md) | 🔴 in progress (3 red) |
+| 02 | §6.2 Resilience — circuit breaker | [Exercise02-CircuitBreaker.md](Exercise02-CircuitBreaker.md) | ✅ walked through together (12 tests) |
+
+### Walkthrough takeaways — Exercise 02
+- **Derive the fields from the requirements first.** Seven fields; everything else is rules over them.
+- **A rolling `Queue<bool>`** gives failure *ratio*, which catches a service failing 60% of the time
+  even though it never fails twice in a row.
+- 🌟 **Three phases: DECIDE (locked) → CALL (unlocked) → RECORD (locked).**
+  **Never hold a lock across I/O** — it serialises every caller behind one slow network call.
+- **Single probe** needs a `_probeInFlight` flag: the state alone is not enough, because ten threads
+  can all read "HalfOpen" at the same instant.
+- **Closing must clear the window**, or the old failures re-trip the breaker immediately.
+- Evaluate the ratio after **every** call, not only failures — `fail, ok, fail, ok` crosses 50% on a
+  call that itself succeeded.
+- **Test-design lesson:** to prove "only one probe", the probe must still be **in flight** while the
+  others arrive; otherwise it completes, the breaker closes, and the rest pass through legitimately.
 
 ### Review takeaways — Exercise 01
 - **Core idempotency logic was correct first time** (charge → store under key → replay).
