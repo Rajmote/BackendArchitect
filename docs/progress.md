@@ -26,8 +26,18 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 2.3.3 Cosmos — indexing policy | [IndexingPolicy.md](../src/BackendArchitect/Databases/Cosmos/IndexingPolicy/IndexingPolicy.md) | `IndexPolicy.cs`, `IndexingPolicyDemo.cs` | ✅ |
 | 2.3.4 Cosmos — consistency levels | [ConsistencyLevels.md](../src/BackendArchitect/Databases/Cosmos/ConsistencyLevels/ConsistencyLevels.md) | `ReplicatedStore.cs`, `ConsistencyLevelsDemo.cs` | ✅ |
 
-## ✅ Month 2 — APIs, HTTP & resilience: COMPLETE (127 reference tests green)
-Next: **Month 3 — Concurrency & observability** (§4 and §5.1). Outstanding: Exercise 02 (circuit breaker).
+## Month 3 — Concurrency & observability (in progress)
+
+| Sub topic | Notes | Code | Status |
+|---|---|---|---|
+| 4.1 async/await | [AsyncAwait.md](../src/BackendArchitect/Concurrency/AsyncAwait/AsyncAwait.md) | `FakeIoService.cs`, `AsyncPatterns.cs` | ✅ |
+| 4.2 Task / Channel / IAsyncEnumerable | — | — | ⏳ next |
+| 4.3 Race conditions & locks | — | — | ☐ |
+| 4.4 Immutability | — | — | ☐ |
+| 4.5 Producer/consumer pipelines | — | — | ☐ |
+| 5.1 Observability (logging, metrics, OpenTelemetry) | — | — | ☐ |
+
+## ✅ Month 2 — APIs, HTTP & resilience: COMPLETE
 
 
 | Sub topic | Notes | Code | Status |

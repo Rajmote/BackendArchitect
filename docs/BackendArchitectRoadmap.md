@@ -84,8 +84,11 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 - **3.4 GraphQL** — ✅ [notes](../src/BackendArchitect/Apis/GraphQL/Basics/GraphQlBasics.md) · code `FetchComparison.cs`, `ResolverEngine.cs`, `QueryGuard.cs`
   - Examples: over- vs under-fetching measured ✅ · N+1 resolvers and DataLoader batching ✅ · depth/complexity/pagination guards ✅ · 200-with-errors & partial success ✅ · GraphQL vs MongoDB (different tiers) ✅ · when REST is the better call ✅
 
-## 4. Concurrency & Async 📁 `.../Concurrency`
-- **4.1 async/await internals** ☐ · **4.2 Task / Channel / IAsyncEnumerable** ☐
+## 4. Concurrency & Async 📁 [`src/…/Concurrency`](../src/BackendArchitect/Concurrency)
+- **4.1 async/await internals** — ✅ [notes](../src/BackendArchitect/Concurrency/AsyncAwait/AsyncAwait.md) · code `FakeIoService.cs`, `AsyncPatterns.cs`
+  - Examples: the state machine & "there is no thread" ✅ · sequential vs `WhenAll` (275ms → 66ms) ✅ · thread cost measured (8 threads vs **1** for 20 calls) ✅ · the four classic bugs (`.Result`, `async void`, async-over-sync, async for CPU) ✅
+  - Practice: [Exercise 03 — fixing async code](../practice/Exercise03-AsyncPatterns.md)
+- **4.2 Task / Channel / IAsyncEnumerable** ⏳ next
 - **4.3 Race conditions & locks** ☐ · **4.4 Immutability** ☐ · **4.5 Producer/consumer pipelines** ☐
 
 ## 5. Observability & Security 📁 `.../Observability` · `.../Security`
