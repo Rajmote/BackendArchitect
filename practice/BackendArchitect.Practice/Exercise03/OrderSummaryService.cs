@@ -55,7 +55,7 @@ public sealed class OrderSummaryService
     /// THIS is the method the tests call — implement it, then delete the broken <see cref="GetSummary"/>
     /// below once you no longer need it for reference.
     /// </summary>
-    public async Task<OrderSummary> GetSummaryAsync(int customerId, CancellationToken cancellationToken = default)
+  public async Task<OrderSummary> GetSummaryAsync(int customerId, CancellationToken cancellationToken = default)
     {
         // 1. Kick off all 3 independent async operations concurrently
         var customerTask = _data.GetCustomerAsync(customerId, cancellationToken);
@@ -78,28 +78,27 @@ public sealed class OrderSummaryService
 
         return new OrderSummary(customer.Name, orders.Count, total);
     }
-        
 
     // The inherited version, kept so you can see exactly what needs fixing.
-    public async Task<OrderSummary> GetSummary(int customerId)
+    public OrderSummary GetSummary(int customerId)
     {
         // ❌ mistake 1: .Result blocks a thread (and can deadlock in some contexts)
         // ❌ mistake 2: the three independent calls run one after another
         // ❌ mistake 3: Task.Run around already-async work wastes a pool thread
         // ❌ mistake 4: no CancellationToken anywhere
-        var customer = await _data.GetCustomerAsync(customerId);
-        var orders = await _data.GetOrdersAsync(customerId);
-        var prices = await _data.GetPricesAsync();
+        var customer = _data.GetCustomerAsync(customerId).Result;
+        var orders = Task.Run(() => _data.GetOrdersAsync(customerId)).Result;
+        var prices = _data.GetPricesAsync().Result;
 
         var total = orders.Sum(order => order.Quantity * prices[order.Product]);
 
-        await LogAudit($"summary built for {customer.Name}");
+        LogAudit($"summary built for {customer.Name}");
 
         return new OrderSummary(customer.Name, orders.Count, total);
     }
 
     // ❌ mistake 5: async void — cannot be awaited, and an exception here would crash the process
-    private async Task LogAudit(string message)
+    private async void LogAudit(string message)
     {
         await _data.WriteAuditAsync(message);
     }
