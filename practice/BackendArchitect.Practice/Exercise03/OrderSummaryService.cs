@@ -55,8 +55,30 @@ public sealed class OrderSummaryService
     /// THIS is the method the tests call — implement it, then delete the broken <see cref="GetSummary"/>
     /// below once you no longer need it for reference.
     /// </summary>
-    public Task<OrderSummary> GetSummaryAsync(int customerId, CancellationToken cancellationToken = default) =>
-        throw new NotImplementedException("Exercise 03 — implement GetSummaryAsync");
+    public async Task<OrderSummary> GetSummaryAsync(int customerId, CancellationToken cancellationToken = default)
+    {
+        // 1. Kick off all 3 independent async operations concurrently
+        var customerTask = _data.GetCustomerAsync(customerId, cancellationToken);
+        var ordersTask = _data.GetOrdersAsync(customerId, cancellationToken);
+        var pricesTask = _data.GetPricesAsync(cancellationToken);
+
+        // 2. Await all 3 tasks simultaneously to run them in parallel
+        await Task.WhenAll(customerTask, ordersTask, pricesTask);
+
+        // 3. Extract the results once completed
+        var customer = await customerTask;
+        var orders = await ordersTask;
+        var prices = await pricesTask;
+
+        // 4. Calculate total cost using the dictionary lookup
+        var total = orders.Sum(order => order.Quantity * prices[order.Product]);
+
+        // 5. Pass cancellationToken and properly await the audit call
+        await _data.WriteAuditAsync($"summary built for {customer.Name}", cancellationToken);
+
+        return new OrderSummary(customer.Name, orders.Count, total);
+    }
+        
 
     // The inherited version, kept so you can see exactly what needs fixing.
     public async Task<OrderSummary> GetSummary(int customerId)
