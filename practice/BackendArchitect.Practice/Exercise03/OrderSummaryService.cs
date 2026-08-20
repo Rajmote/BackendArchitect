@@ -59,25 +59,25 @@ public sealed class OrderSummaryService
         throw new NotImplementedException("Exercise 03 — implement GetSummaryAsync");
 
     // The inherited version, kept so you can see exactly what needs fixing.
-    public OrderSummary GetSummary(int customerId)
+    public async Task<OrderSummary> GetSummary(int customerId)
     {
         // ❌ mistake 1: .Result blocks a thread (and can deadlock in some contexts)
         // ❌ mistake 2: the three independent calls run one after another
         // ❌ mistake 3: Task.Run around already-async work wastes a pool thread
         // ❌ mistake 4: no CancellationToken anywhere
-        var customer = _data.GetCustomerAsync(customerId).Result;
-        var orders = Task.Run(() => _data.GetOrdersAsync(customerId)).Result;
-        var prices = _data.GetPricesAsync().Result;
+        var customer = await _data.GetCustomerAsync(customerId);
+        var orders = await _data.GetOrdersAsync(customerId);
+        var prices = await _data.GetPricesAsync();
 
         var total = orders.Sum(order => order.Quantity * prices[order.Product]);
 
-        LogAudit($"summary built for {customer.Name}");
+        await LogAudit($"summary built for {customer.Name}");
 
         return new OrderSummary(customer.Name, orders.Count, total);
     }
 
     // ❌ mistake 5: async void — cannot be awaited, and an exception here would crash the process
-    private async void LogAudit(string message)
+    private async Task LogAudit(string message)
     {
         await _data.WriteAuditAsync(message);
     }
