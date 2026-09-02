@@ -41,7 +41,10 @@ dotnet test BackendArchitect.slnx -c Release
 |---|---|---|---|
 | 01 | §3.1 HTTP — idempotency keys | [Exercise01-IdempotencyKeys.md](Exercise01-IdempotencyKeys.md) | ✅ done & reviewed (14 tests) |
 | 02 | §6.2 Resilience — circuit breaker | [Exercise02-CircuitBreaker.md](Exercise02-CircuitBreaker.md) | ✅ walked through together (12 tests) |
-| 03 | §4.1 async/await — fixing async code | [Exercise03-AsyncPatterns.md](Exercise03-AsyncPatterns.md) | 🔴 in progress |
+| 03 | §4.1 async/await — fixing async code | [Exercise03-AsyncPatterns.md](Exercise03-AsyncPatterns.md) | ⏸️ queued |
+
+> ⏸️ **Exercises are currently queued, not abandoned.** Learning is running Theory → Quiz for now;
+> exercises are written up and left red, to be worked through at the end of each month.
 
 ### Walkthrough takeaways — Exercise 02
 - **Derive the fields from the requirements first.** Seven fields; everything else is rules over them.

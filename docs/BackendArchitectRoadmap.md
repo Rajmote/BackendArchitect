@@ -88,7 +88,8 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 - **4.1 async/await internals** — ✅ [notes](../src/BackendArchitect/Concurrency/AsyncAwait/AsyncAwait.md) · code `FakeIoService.cs`, `AsyncPatterns.cs`
   - Examples: the state machine & "there is no thread" ✅ · sequential vs `WhenAll` (275ms → 66ms) ✅ · thread cost measured (8 threads vs **1** for 20 calls) ✅ · the four classic bugs (`.Result`, `async void`, async-over-sync, async for CPU) ✅
   - Practice: [Exercise 03 — fixing async code](../practice/Exercise03-AsyncPatterns.md)
-- **4.2 Task / Channel / IAsyncEnumerable** ⏳ next
+- **4.2 Task / ValueTask / IAsyncEnumerable / Channel** — ✅ [notes](../src/BackendArchitect/Concurrency/Streams/TasksAndStreams.md) · code `StreamingVsBuffering.cs`, `CachedCustomerLookup.cs`, `WorkQueue.cs`
+  - Examples: pick-by-shape matrix ✅ · batch vs stream measured (676ms→10ms, 40 rows→1) ✅ · `ValueTask` sync completion 95/100 + its rules ✅ · multi-consumer fan-out (why not `IAsyncEnumerable`) ✅ · **backpressure**: backlog 60→6 for 779ms of producer waiting ✅ · Channel vs message broker ✅
 - **4.3 Race conditions & locks** ☐ · **4.4 Immutability** ☐ · **4.5 Producer/consumer pipelines** ☐
 
 ## 5. Observability & Security 📁 `.../Observability` · `.../Security`

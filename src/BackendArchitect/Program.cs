@@ -14,6 +14,7 @@ using BackendArchitect.Apis.GraphQL.Basics;
 using BackendArchitect.Reliability.Resilience;
 using BackendArchitect.Reliability.Resilience.Production;
 using BackendArchitect.Concurrency.AsyncAwait;
+using BackendArchitect.Concurrency.Streams;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -81,3 +82,7 @@ new ProductionResilienceDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Concurrency · async/await (threads, not speed) =====");
 new AsyncAwaitDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Concurrency · Task, ValueTask, IAsyncEnumerable, Channel =====");
+new StreamsDemo().Run();

@@ -31,8 +31,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | Sub topic | Notes | Code | Status |
 |---|---|---|---|
 | 4.1 async/await | [AsyncAwait.md](../src/BackendArchitect/Concurrency/AsyncAwait/AsyncAwait.md) | `FakeIoService.cs`, `AsyncPatterns.cs` | ✅ |
-| 4.2 Task / Channel / IAsyncEnumerable | — | — | ⏳ next |
-| 4.3 Race conditions & locks | — | — | ☐ |
+| 4.2 Task / ValueTask / IAsyncEnumerable / Channel | [TasksAndStreams.md](../src/BackendArchitect/Concurrency/Streams/TasksAndStreams.md) | `StreamingVsBuffering.cs`, `CachedCustomerLookup.cs`, `WorkQueue.cs` | ✅ |
+| 4.3 Race conditions & locks | — | — | ⏳ next |
 | 4.4 Immutability | — | — | ☐ |
 | 4.5 Producer/consumer pipelines | — | — | ☐ |
 | 5.1 Observability (logging, metrics, OpenTelemetry) | — | — | ☐ |
