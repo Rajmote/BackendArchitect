@@ -41,7 +41,8 @@ dotnet test BackendArchitect.slnx -c Release
 |---|---|---|---|
 | 01 | §3.1 HTTP — idempotency keys | [Exercise01-IdempotencyKeys.md](Exercise01-IdempotencyKeys.md) | ✅ done & reviewed (14 tests) |
 | 02 | §6.2 Resilience — circuit breaker | [Exercise02-CircuitBreaker.md](Exercise02-CircuitBreaker.md) | ✅ walked through together (12 tests) |
-| 03 | §4.1 async/await — fixing async code | [Exercise03-AsyncPatterns.md](Exercise03-AsyncPatterns.md) | ⏸️ queued |
+| 03 | §4.1 async/await — fixing async code | [Exercise03-AsyncPatterns.md](Exercise03-AsyncPatterns.md) | ✅ solved & reviewed (29 tests) |
+| 04 | §4.3 Race conditions — a box office that can't oversell | [Exercise04-RaceConditions.md](Exercise04-RaceConditions.md) | 📝 brief only — stubs when exercises resume |
 
 > ⏸️ **Exercises are currently queued, not abandoned.** Learning is running Theory → Quiz for now;
 > exercises are written up and left red, to be worked through at the end of each month.
@@ -59,6 +60,16 @@ dotnet test BackendArchitect.slnx -c Release
   call that itself succeeded.
 - **Test-design lesson:** to prove "only one probe", the probe must still be **in flight** while the
   others arrive; otherwise it completes, the breaker closes, and the rest pass through legitimately.
+
+### Review takeaways — Exercise 03
+- **Start all independent calls, *then* `await Task.WhenAll`** — awaiting each in turn is sequential
+  code wearing an async costume.
+- Re-awaiting each task after `WhenAll` is free, and `WhenAll` is preferred over awaiting individually
+  because it **aggregates** the exceptions.
+- The `CancellationToken` has to reach **every** call, including the audit write.
+- Left to tidy: the old `GetSummary` and its `private async void LogAudit` are still in the file —
+  the criterion was *no `async void` anywhere*. Delete them.
+- The two bonus tests (concurrency + cancellation) are still `TODO`.
 
 ### Review takeaways — Exercise 01
 - **Core idempotency logic was correct first time** (charge → store under key → replay).

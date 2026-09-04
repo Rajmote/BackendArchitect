@@ -15,6 +15,7 @@ using BackendArchitect.Reliability.Resilience;
 using BackendArchitect.Reliability.Resilience.Production;
 using BackendArchitect.Concurrency.AsyncAwait;
 using BackendArchitect.Concurrency.Streams;
+using BackendArchitect.Concurrency.Locks;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -86,3 +87,7 @@ new AsyncAwaitDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Concurrency · Task, ValueTask, IAsyncEnumerable, Channel =====");
 new StreamsDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Concurrency · Race conditions & locks (lost updates, deadlock) =====");
+new RaceConditionsDemo().Run();

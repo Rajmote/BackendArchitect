@@ -90,7 +90,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - Practice: [Exercise 03 — fixing async code](../practice/Exercise03-AsyncPatterns.md)
 - **4.2 Task / ValueTask / IAsyncEnumerable / Channel** — ✅ [notes](../src/BackendArchitect/Concurrency/Streams/TasksAndStreams.md) · code `StreamingVsBuffering.cs`, `CachedCustomerLookup.cs`, `WorkQueue.cs`
   - Examples: pick-by-shape matrix ✅ · batch vs stream measured (676ms→10ms, 40 rows→1) ✅ · `ValueTask` sync completion 95/100 + its rules ✅ · multi-consumer fan-out (why not `IAsyncEnumerable`) ✅ · **backpressure**: backlog 60→6 for 779ms of producer waiting ✅ · Channel vs message broker ✅
-- **4.3 Race conditions & locks** ☐ · **4.4 Immutability** ☐ · **4.5 Producer/consumer pipelines** ☐
+- **4.3 Race conditions & locks** — ✅ [notes](../src/BackendArchitect/Concurrency/Locks/RaceConditionsAndLocks.md) · code `Counter.cs`, `SessionCache.cs`, `AccountTransfer.cs`
+  - Examples: `count++` is 3 CPU ops — 1,178,868 lost updates from 8 threads ✅ · check-then-act as one shape across four features ✅ · `Interlocked` vs `lock` measured (45ms vs 248ms) ✅ · thread-safe collection ≠ thread-safe code: `GetOrAdd` still constructs 8, `Lazy<T>` constructs 1 ✅ · **deadlock** by lock ordering (0 completed → 2 completed) ✅ · why an in-process lock is worthless across replicas ✅
+- **4.4 Immutability** ☐ · **4.5 Producer/consumer pipelines** ☐
 
 ## 5. Observability & Security 📁 `.../Observability` · `.../Security`
 - **5.1 Observability** — structured logging ☐ · metrics ☐ · distributed tracing (OpenTelemetry) ☐

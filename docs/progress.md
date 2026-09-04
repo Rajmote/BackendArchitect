@@ -32,8 +32,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 |---|---|---|---|
 | 4.1 async/await | [AsyncAwait.md](../src/BackendArchitect/Concurrency/AsyncAwait/AsyncAwait.md) | `FakeIoService.cs`, `AsyncPatterns.cs` | ✅ |
 | 4.2 Task / ValueTask / IAsyncEnumerable / Channel | [TasksAndStreams.md](../src/BackendArchitect/Concurrency/Streams/TasksAndStreams.md) | `StreamingVsBuffering.cs`, `CachedCustomerLookup.cs`, `WorkQueue.cs` | ✅ |
-| 4.3 Race conditions & locks | — | — | ⏳ next |
-| 4.4 Immutability | — | — | ☐ |
+| 4.3 Race conditions & locks | [RaceConditionsAndLocks.md](../src/BackendArchitect/Concurrency/Locks/RaceConditionsAndLocks.md) | `Counter.cs`, `SessionCache.cs`, `AccountTransfer.cs` | ✅ |
+| 4.4 Immutability | — | — | ⏳ next |
 | 4.5 Producer/consumer pipelines | — | — | ☐ |
 | 5.1 Observability (logging, metrics, OpenTelemetry) | — | — | ☐ |
 
@@ -49,6 +49,20 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 6.2 Resilience (retries, timeouts, circuit breakers) | [Resilience.md](../src/BackendArchitect/Reliability/Resilience/Resilience.md) | `RetryPolicy.cs`, `CircuitBreaker.cs`, `Bulkhead.cs` | ✅ |
 | 6.2b Resilience with **Polly** (v8 pipelines) | same note, §7 | `PollyPipelines.cs`, `PollyDemo.cs` | ✅ |
 | 6.2c Resilience in **production** (DI + HttpClient) | same note, §8 | `Production/PaymentApiClient.cs`, `ResilienceRegistration.cs` | ✅ |
+
+## Drill — interleaving by hand (from the §4.3 quiz, 2026-09-04, 2/5)
+
+Consistent pattern: questions of the form *"which tool and why"* land ✅; questions of the form
+*"trace two threads through this code"* slip ❌.
+
+> 🌟 **The drill: write the two threads in two columns and interleave them by hand at the worst possible
+> moment.** Don't reason about it abstractly — physically write out the interleaving.
+
+| Missed | The correction |
+|---|---|
+| "`_counter++` will be 100,000 **eventually**" | There is no *eventually*. A lost update is **permanent** — the second write overwrote the first and nothing owes it back |
+| check-then-act in the idempotency handler | The gap is between `TryGetValue` returning *not found* and the receipt being stored. Both threads charge |
+| `lock (from) { lock (to) }` "looks good" | Rewrite it with `alice`/`bob` instead of `from`/`to` and the deadlock is visible on the page |
 
 ## Revision checklist — Month 1 recall quiz (2026-08-02, 13 questions)
 
@@ -80,6 +94,7 @@ machine answers → scale) · partition key + id = point read · 429 surfaces as
 ## Log
 | Date | What I learned / built | Next |
 |---|---|---|
+| 2026-09-04 | §4.3 Race conditions & locks: lost updates (8 threads lost 1,178,868 of 1,600,000), check-then-act as one shape across four features, `Interlocked` vs `lock` measured 45ms vs 248ms, `ConcurrentDictionary` misuse (`GetOrAdd` still constructs 8, `Lazy<T>` constructs 1), deadlock by lock ordering. 12 tests. Quiz 2/5 — see the drill below | §4.4 Immutability |
 | 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
 | 2026-08-04 | Month 2: §3.1 HTTP fundamentals, §3.2 REST design & versioning, §3.3 gRPC — 98 tests green | §3.4 GraphQL, then §6.2 resilience |
 | 2026-08-02 | Recall quiz on all of Month 1 (13 questions, one at a time) — see the revision checklist above: 8 solid, 5 to revisit | Month 2 |
