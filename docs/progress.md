@@ -33,8 +33,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 4.1 async/await | [AsyncAwait.md](../src/BackendArchitect/Concurrency/AsyncAwait/AsyncAwait.md) | `FakeIoService.cs`, `AsyncPatterns.cs` | ✅ |
 | 4.2 Task / ValueTask / IAsyncEnumerable / Channel | [TasksAndStreams.md](../src/BackendArchitect/Concurrency/Streams/TasksAndStreams.md) | `StreamingVsBuffering.cs`, `CachedCustomerLookup.cs`, `WorkQueue.cs` | ✅ |
 | 4.3 Race conditions & locks | [RaceConditionsAndLocks.md](../src/BackendArchitect/Concurrency/Locks/RaceConditionsAndLocks.md) | `Counter.cs`, `SessionCache.cs`, `AccountTransfer.cs` | ✅ |
-| 4.4 Immutability | — | — | ⏳ next |
-| 4.5 Producer/consumer pipelines | — | — | ☐ |
+| 4.4 Immutability | [Immutability.md](../src/BackendArchitect/Concurrency/Immutability/Immutability.md) | `MutabilityTraps.cs`, `FeatureFlags.cs` | ✅ |
+| 4.5 Producer/consumer pipelines | — | — | ⏳ next |
 | 5.1 Observability (logging, metrics, OpenTelemetry) | — | — | ☐ |
 
 ## ✅ Month 2 — APIs, HTTP & resilience: COMPLETE
@@ -63,6 +63,19 @@ Consistent pattern: questions of the form *"which tool and why"* land ✅; quest
 | "`_counter++` will be 100,000 **eventually**" | There is no *eventually*. A lost update is **permanent** — the second write overwrote the first and nothing owes it back |
 | check-then-act in the idempotency handler | The gap is between `TryGetValue` returning *not found* and the receipt being stored. Both threads charge |
 | `lock (from) { lock (to) }` "looks good" | Rewrite it with `alice`/`bob` instead of `from`/`to` and the deadlock is visible on the page |
+
+## 📌 Revision flag — §4.4 Immutability (2026-09-15, 1/5)
+
+Weakest quiz so far. Q1–Q4 were all the **same** misread — seeing *mutation* where the code produces a
+*copy* — and once that was named out loud, Q5 (strictly the hardest of the five) came out right unaided.
+So this is a mental model to flip, not material to grind.
+
+> 🌟 **The whole topic in one sentence: everything in immutable C# protects the ARROW. Only the target's
+> own type protects the TARGET.**
+
+Run that sentence against all five questions and every answer falls out of it.
+**Re-read [Immutability.md](../src/BackendArchitect/Concurrency/Immutability/Immutability.md) §3 before
+the Month 3 recall quiz.**
 
 ## Revision checklist — Month 1 recall quiz (2026-08-02, 13 questions)
 
@@ -94,6 +107,7 @@ machine answers → scale) · partition key + id = point read · 429 surfaces as
 ## Log
 | Date | What I learned / built | Next |
 |---|---|---|
+| 2026-09-15 | §4.4 Immutability: five "immutable" things that leak and one that holds, deep immutability, `with` is shallow, mutable keys lost in a dictionary (but a `List` property doesn't move the key), `ImmutableArray` compares by array reference, copy-on-write feature flags measured 884ms → 305ms over 4M reads. 18 tests. Quiz 1/5 — **flagged for revision** | §4.5 Producer/consumer pipelines |
 | 2026-09-04 | §4.3 Race conditions & locks: lost updates (8 threads lost 1,178,868 of 1,600,000), check-then-act as one shape across four features, `Interlocked` vs `lock` measured 45ms vs 248ms, `ConcurrentDictionary` misuse (`GetOrAdd` still constructs 8, `Lazy<T>` constructs 1), deadlock by lock ordering. 12 tests. Quiz 2/5 — see the drill below | §4.4 Immutability |
 | 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
 | 2026-08-04 | Month 2: §3.1 HTTP fundamentals, §3.2 REST design & versioning, §3.3 gRPC — 98 tests green | §3.4 GraphQL, then §6.2 resilience |

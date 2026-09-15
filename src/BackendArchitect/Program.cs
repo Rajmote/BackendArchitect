@@ -16,6 +16,7 @@ using BackendArchitect.Reliability.Resilience.Production;
 using BackendArchitect.Concurrency.AsyncAwait;
 using BackendArchitect.Concurrency.Streams;
 using BackendArchitect.Concurrency.Locks;
+using BackendArchitect.Concurrency.Immutability;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -91,3 +92,7 @@ new StreamsDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Concurrency · Race conditions & locks (lost updates, deadlock) =====");
 new RaceConditionsDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Concurrency · Immutability (the traps, and copy-on-write) =====");
+new ImmutabilityDemo().Run();

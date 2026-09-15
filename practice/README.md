@@ -43,6 +43,7 @@ dotnet test BackendArchitect.slnx -c Release
 | 02 | §6.2 Resilience — circuit breaker | [Exercise02-CircuitBreaker.md](Exercise02-CircuitBreaker.md) | ✅ walked through together (12 tests) |
 | 03 | §4.1 async/await — fixing async code | [Exercise03-AsyncPatterns.md](Exercise03-AsyncPatterns.md) | ✅ solved & reviewed (29 tests) |
 | 04 | §4.3 Race conditions — a box office that can't oversell | [Exercise04-RaceConditions.md](Exercise04-RaceConditions.md) | 📝 brief only — stubs when exercises resume |
+| 05 | §4.4 Immutability — a lock-free pricing catalogue | [Exercise05-Immutability.md](Exercise05-Immutability.md) | 📝 brief only — stubs when exercises resume |
 
 > ⏸️ **Exercises are currently queued, not abandoned.** Learning is running Theory → Quiz for now;
 > exercises are written up and left red, to be worked through at the end of each month.
