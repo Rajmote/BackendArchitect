@@ -17,6 +17,7 @@ using BackendArchitect.Concurrency.AsyncAwait;
 using BackendArchitect.Concurrency.Streams;
 using BackendArchitect.Concurrency.Locks;
 using BackendArchitect.Concurrency.Immutability;
+using BackendArchitect.Concurrency.Pipelines;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -96,3 +97,7 @@ new RaceConditionsDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Concurrency · Immutability (the traps, and copy-on-write) =====");
 new ImmutabilityDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Concurrency · Producer/consumer pipelines (bottlenecks & the three bugs) =====");
+new PipelinesDemo().Run();

@@ -42,11 +42,14 @@ dotnet test BackendArchitect.slnx -c Release
 | 01 | §3.1 HTTP — idempotency keys | [Exercise01-IdempotencyKeys.md](Exercise01-IdempotencyKeys.md) | ✅ done & reviewed (14 tests) |
 | 02 | §6.2 Resilience — circuit breaker | [Exercise02-CircuitBreaker.md](Exercise02-CircuitBreaker.md) | ✅ walked through together (12 tests) |
 | 03 | §4.1 async/await — fixing async code | [Exercise03-AsyncPatterns.md](Exercise03-AsyncPatterns.md) | ✅ solved & reviewed (29 tests) |
-| 04 | §4.3 Race conditions — a box office that can't oversell | [Exercise04-RaceConditions.md](Exercise04-RaceConditions.md) | 📝 brief only — stubs when exercises resume |
-| 05 | §4.4 Immutability — a lock-free pricing catalogue | [Exercise05-Immutability.md](Exercise05-Immutability.md) | 📝 brief only — stubs when exercises resume |
+| 04 | §4.3 Race conditions — a box office that can't oversell | [Exercise04-RaceConditions.md](Exercise04-RaceConditions.md) | 🔴 in progress (3 starter tests) |
+| 05 | §4.4 Immutability — a lock-free pricing catalogue | [Exercise05-Immutability.md](Exercise05-Immutability.md) | 🔴 in progress (3 starter tests) |
+| 06 | §4.5 Pipelines — a receipt pipeline that survives bad data | [Exercise06-Pipelines.md](Exercise06-Pipelines.md) | 🔴 in progress (3 starter tests) |
 
-> ⏸️ **Exercises are currently queued, not abandoned.** Learning is running Theory → Quiz for now;
-> exercises are written up and left red, to be worked through at the end of each month.
+> 🔴 **Three exercises are open.** Learning runs Theory → Quiz at full speed; the exercises are written
+> up with stubs and starter tests and left **red**, to be worked through when there's time.
+> **Red is the to-do list.** Suggested order: **04 → 06 → 05** (04 and 06 build on each other; 05 is the
+> one that removes the need for the locks you write in 04).
 
 ### Walkthrough takeaways — Exercise 02
 - **Derive the fields from the requirements first.** Seven fields; everything else is rules over them.

@@ -94,7 +94,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - Examples: `count++` is 3 CPU ops — 1,178,868 lost updates from 8 threads ✅ · check-then-act as one shape across four features ✅ · `Interlocked` vs `lock` measured (45ms vs 248ms) ✅ · thread-safe collection ≠ thread-safe code: `GetOrAdd` still constructs 8, `Lazy<T>` constructs 1 ✅ · **deadlock** by lock ordering (0 completed → 2 completed) ✅ · why an in-process lock is worthless across replicas ✅
 - **4.4 Immutability** — ✅ [notes](../src/BackendArchitect/Concurrency/Immutability/Immutability.md) · code `MutabilityTraps.cs`, `FeatureFlags.cs`
   - Examples: five "immutable" things that leak and one that holds ✅ · `readonly`/`init`/`record`/`with` all protect the arrow, not the target ✅ · `IReadOnlyList<T>` is a window not a photograph (and casts straight back) ✅ · `with` is a shallow copy ✅ · mutable key lost in a dictionary — but a `List` property does **not** move it ✅ · `ImmutableArray` compares by array reference, so immutable ≠ structurally equal ✅ · **copy-on-write**: lock-free readers, 884ms → 305ms over 4M reads ✅
-- **4.5 Producer/consumer pipelines** ☐
+- **4.5 Producer/consumer pipelines** — ✅ [notes](../src/BackendArchitect/Concurrency/Pipelines/Pipelines.md) · code `OrderPipeline.cs`, `PipelineFaults.cs`
+  - Examples: latency (sum) vs throughput (slowest stage) ✅ · **queue depth finds the bottleneck** — 30 queued in front of `price` ✅ · scaling moves the bottleneck, never removes it ✅ · backpressure reaching the front door vs an unbounded backlog ✅ · `try` inside vs outside the loop — 181/200 with 4 workers alive vs 37/200 with none ✅ · a worker calling `Complete()` strands its siblings (37/40 delivered) ✅ · ordering: 12 of 12 keys reordered, 0 when partitioned by a stable hash ✅ · TPL Dataflow as the production layer ✅
+  - Practice: [Exercise 06 — receipt pipeline](../practice/Exercise06-Pipelines.md)
 
 ## 5. Observability & Security 📁 `.../Observability` · `.../Security`
 - **5.1 Observability** — structured logging ☐ · metrics ☐ · distributed tracing (OpenTelemetry) ☐
@@ -143,13 +145,14 @@ Maps onto the tree above.
 - [x] NoSQL concepts (§2.2) · [x] Cosmos DB (§2.3 — fundamentals, partition keys, RU/s, indexing policy, consistency levels)
 - **Build:** make a slow query / Cosmos container fast; document why · **Read:** DDIA ch. 1–4
 
-### Month 2 — APIs, HTTP & resilience (§3, §6.2)
-- [ ] HTTP + REST/gRPC design + versioning · [ ] retries/timeouts/circuit breakers/idempotency
-- **Build:** API + resilient client (Polly) + idempotent write · **At work:** trace ACL → Event Hub → Output; write an ADR · **Read:** Release It!
+### Month 2 — APIs, HTTP & resilience (§3, §6.2) — ✅ **COMPLETE**
+- [x] HTTP + REST/gRPC design + versioning (§3.1–3.4) · [x] retries/timeouts/circuit breakers/idempotency (§6.2)
+- **Build:** API + resilient client (Polly) + idempotent write · **At work:** trace the pipeline end to end; write an ADR · **Read:** Release It!
 
-### Month 3 — Concurrency & observability (§4, §5.1)
-- [ ] async internals, Channel, parallelism, races · [ ] OpenTelemetry traces/metrics/logs
-- **Build:** concurrent producer/consumer with full telemetry · **Read:** DDIA ch. 5–9
+### Month 3 — Concurrency & observability (§4, §5.1) — ⏳ **in progress**
+- [x] async internals (§4.1) · [x] Task/ValueTask/IAsyncEnumerable/Channel (§4.2) · [x] races & locks (§4.3) · [x] immutability (§4.4) · [x] producer/consumer pipelines (§4.5)
+- [ ] OpenTelemetry traces/metrics/logs (§5.1)
+- **Build:** concurrent producer/consumer with full telemetry — **this is §4.5 + §5.1 combined**, not a separate project · **Read:** DDIA ch. 5–9
 
 ### Month 4 — Distributed systems & messaging (§8)
 - [ ] CAP, consistency, fallacies, event-driven · [ ] Event Hub/Kafka, CQRS, event sourcing

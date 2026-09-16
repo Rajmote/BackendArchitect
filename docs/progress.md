@@ -34,8 +34,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 4.2 Task / ValueTask / IAsyncEnumerable / Channel | [TasksAndStreams.md](../src/BackendArchitect/Concurrency/Streams/TasksAndStreams.md) | `StreamingVsBuffering.cs`, `CachedCustomerLookup.cs`, `WorkQueue.cs` | ✅ |
 | 4.3 Race conditions & locks | [RaceConditionsAndLocks.md](../src/BackendArchitect/Concurrency/Locks/RaceConditionsAndLocks.md) | `Counter.cs`, `SessionCache.cs`, `AccountTransfer.cs` | ✅ |
 | 4.4 Immutability | [Immutability.md](../src/BackendArchitect/Concurrency/Immutability/Immutability.md) | `MutabilityTraps.cs`, `FeatureFlags.cs` | ✅ |
-| 4.5 Producer/consumer pipelines | — | — | ⏳ next |
-| 5.1 Observability (logging, metrics, OpenTelemetry) | — | — | ☐ |
+| 4.5 Producer/consumer pipelines | [Pipelines.md](../src/BackendArchitect/Concurrency/Pipelines/Pipelines.md) | `OrderPipeline.cs`, `PipelineFaults.cs` | ✅ |
+| 5.1 Observability (logging, metrics, OpenTelemetry) | — | — | ⏳ next |
 
 ## ✅ Month 2 — APIs, HTTP & resilience: COMPLETE
 
@@ -107,6 +107,7 @@ machine answers → scale) · partition key + id = point read · 429 surfaces as
 ## Log
 | Date | What I learned / built | Next |
 |---|---|---|
+| 2026-09-16 | §4.5 Producer/consumer pipelines: bottleneck = slowest stage, queue depth locates it, backpressure reaching the front door, `try` placement (181/200 vs 37/200), premature `Complete()` losing 3 of 40, ordering 12/12 reordered → 0 when partitioned, TPL Dataflow as the production layer. 11 tests. Quiz 2 clean + 3 with the core idea right — clear step up. **Exercises 04, 05, 06 now have stubs + starter tests and are red** | §5.1 Observability (OpenTelemetry) |
 | 2026-09-15 | §4.4 Immutability: five "immutable" things that leak and one that holds, deep immutability, `with` is shallow, mutable keys lost in a dictionary (but a `List` property doesn't move the key), `ImmutableArray` compares by array reference, copy-on-write feature flags measured 884ms → 305ms over 4M reads. 18 tests. Quiz 1/5 — **flagged for revision** | §4.5 Producer/consumer pipelines |
 | 2026-09-04 | §4.3 Race conditions & locks: lost updates (8 threads lost 1,178,868 of 1,600,000), check-then-act as one shape across four features, `Interlocked` vs `lock` measured 45ms vs 248ms, `ConcurrentDictionary` misuse (`GetOrAdd` still constructs 8, `Lazy<T>` constructs 1), deadlock by lock ordering. 12 tests. Quiz 2/5 — see the drill below | §4.4 Immutability |
 | 2026-07-20 | Scaffolded BackendArchitect; reorganized into Technology→MainTopic→SubTopic tree; indexing + query-plan examples (runnable seek-vs-scan demo, SQL lab, 4 tests) | Transactions & isolation levels |
