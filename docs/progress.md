@@ -26,7 +26,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 2.3.3 Cosmos — indexing policy | [IndexingPolicy.md](../src/BackendArchitect/Databases/Cosmos/IndexingPolicy/IndexingPolicy.md) | `IndexPolicy.cs`, `IndexingPolicyDemo.cs` | ✅ |
 | 2.3.4 Cosmos — consistency levels | [ConsistencyLevels.md](../src/BackendArchitect/Databases/Cosmos/ConsistencyLevels/ConsistencyLevels.md) | `ReplicatedStore.cs`, `ConsistencyLevelsDemo.cs` | ✅ |
 
-## Month 3 — Concurrency & observability (in progress)
+## ✅ Month 3 — Concurrency & observability: COMPLETE (211 reference tests green)
+Next: **Month 4 — Distributed systems & messaging** (§8). Exercises 04–07 are open.
 
 | Sub topic | Notes | Code | Status |
 |---|---|---|---|
@@ -35,7 +36,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 4.3 Race conditions & locks | [RaceConditionsAndLocks.md](../src/BackendArchitect/Concurrency/Locks/RaceConditionsAndLocks.md) | `Counter.cs`, `SessionCache.cs`, `AccountTransfer.cs` | ✅ |
 | 4.4 Immutability | [Immutability.md](../src/BackendArchitect/Concurrency/Immutability/Immutability.md) | `MutabilityTraps.cs`, `FeatureFlags.cs` | ✅ |
 | 4.5 Producer/consumer pipelines | [Pipelines.md](../src/BackendArchitect/Concurrency/Pipelines/Pipelines.md) | `OrderPipeline.cs`, `PipelineFaults.cs` | ✅ |
-| 5.1 Observability (logging, metrics, OpenTelemetry) | — | — | ⏳ next |
+| 5.1 Observability (logging, metrics, OpenTelemetry) | [Observability.md](../src/BackendArchitect/Observability/Telemetry/Observability.md) | `LatencyStats.cs`, `MetricRegistry.cs`, `SpanRecorder.cs` | ✅ |
+| 5.1b Observability in **production** (`ActivitySource`/`Meter` + OTel) | same note, §6 | `Production/OrderTelemetry.cs`, `Production/TelemetryCollector.cs` | ✅ |
 
 ## ✅ Month 2 — APIs, HTTP & resilience: COMPLETE
 
@@ -107,6 +109,7 @@ machine answers → scale) · partition key + id = point read · 429 surfaces as
 ## Log
 | Date | What I learned / built | Next |
 |---|---|---|
+| 2026-09-26 | **Month 3 COMPLETE.** §5.1 Observability: structured logging (template vs interpolation), averages vs percentiles (avg 39.85ms hiding a 2000ms p99), cardinality (100,000 series vs 15), trace propagation (1 trace vs 2 when the header is dropped), and the production layer — `ActivitySource`/`Meter` are the BCL *and* the OTel API, so the domain never names a vendor. 11 tests. Quiz 1 clean + 4 partial | **Month 4 — Distributed systems & messaging** (§8) |
 | 2026-09-16 | §4.5 Producer/consumer pipelines: bottleneck = slowest stage, queue depth locates it, backpressure reaching the front door, `try` placement (181/200 vs 37/200), premature `Complete()` losing 3 of 40, ordering 12/12 reordered → 0 when partitioned, TPL Dataflow as the production layer. 11 tests. Quiz 2 clean + 3 with the core idea right — clear step up. **Exercises 04, 05, 06 now have stubs + starter tests and are red** | §5.1 Observability (OpenTelemetry) |
 | 2026-09-15 | §4.4 Immutability: five "immutable" things that leak and one that holds, deep immutability, `with` is shallow, mutable keys lost in a dictionary (but a `List` property doesn't move the key), `ImmutableArray` compares by array reference, copy-on-write feature flags measured 884ms → 305ms over 4M reads. 18 tests. Quiz 1/5 — **flagged for revision** | §4.5 Producer/consumer pipelines |
 | 2026-09-04 | §4.3 Race conditions & locks: lost updates (8 threads lost 1,178,868 of 1,600,000), check-then-act as one shape across four features, `Interlocked` vs `lock` measured 45ms vs 248ms, `ConcurrentDictionary` misuse (`GetOrAdd` still constructs 8, `Lazy<T>` constructs 1), deadlock by lock ordering. 12 tests. Quiz 2/5 — see the drill below | §4.4 Immutability |

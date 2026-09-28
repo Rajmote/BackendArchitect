@@ -45,11 +45,16 @@ dotnet test BackendArchitect.slnx -c Release
 | 04 | §4.3 Race conditions — a box office that can't oversell | [Exercise04-RaceConditions.md](Exercise04-RaceConditions.md) | 🔴 in progress (3 starter tests) |
 | 05 | §4.4 Immutability — a lock-free pricing catalogue | [Exercise05-Immutability.md](Exercise05-Immutability.md) | 🔴 in progress (3 starter tests) |
 | 06 | §4.5 Pipelines — a receipt pipeline that survives bad data | [Exercise06-Pipelines.md](Exercise06-Pipelines.md) | 🔴 in progress (3 starter tests) |
+| 07 | §5.1 Observability — instrument an order service | [Exercise07-Observability.md](Exercise07-Observability.md) | 🔴 in progress (3 starter tests) |
 
-> 🔴 **Three exercises are open.** Learning runs Theory → Quiz at full speed; the exercises are written
-> up with stubs and starter tests and left **red**, to be worked through when there's time.
-> **Red is the to-do list.** Suggested order: **04 → 06 → 05** (04 and 06 build on each other; 05 is the
-> one that removes the need for the locks you write in 04).
+> 🔴 **Four exercises are open — all of Month 3.** Learning runs Theory → Quiz at full speed; the
+> exercises are written up with stubs and starter tests and left **red**. **Red is the to-do list.**
+>
+> Suggested order: **04 → 06 → 07 → 05**
+> - **04** then **06** build on each other (locks, then the pipeline that uses them)
+> - **07** instruments **06**, which is Month 3's "build" from the roadmap: *a concurrent
+>   producer/consumer with full telemetry*
+> - **05** last, because it's the one that *removes* the need for the locks you write in 04
 
 ### Walkthrough takeaways — Exercise 02
 - **Derive the fields from the requirements first.** Seven fields; everything else is rules over them.

@@ -18,6 +18,7 @@ using BackendArchitect.Concurrency.Streams;
 using BackendArchitect.Concurrency.Locks;
 using BackendArchitect.Concurrency.Immutability;
 using BackendArchitect.Concurrency.Pipelines;
+using BackendArchitect.Observability.Telemetry;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -101,3 +102,7 @@ new ImmutabilityDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Concurrency · Producer/consumer pipelines (bottlenecks & the three bugs) =====");
 new PipelinesDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Observability · logs, metrics, traces (and OpenTelemetry) =====");
+new ObservabilityDemo().Run();

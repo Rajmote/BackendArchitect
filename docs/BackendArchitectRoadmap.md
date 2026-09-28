@@ -99,7 +99,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - Practice: [Exercise 06 — receipt pipeline](../practice/Exercise06-Pipelines.md)
 
 ## 5. Observability & Security 📁 `.../Observability` · `.../Security`
-- **5.1 Observability** — structured logging ☐ · metrics ☐ · distributed tracing (OpenTelemetry) ☐
+- **5.1 Observability** — ✅ [notes](../src/BackendArchitect/Observability/Telemetry/Observability.md) · code `LatencyStats.cs`, `MetricRegistry.cs`, `SpanRecorder.cs`, `Production/OrderTelemetry.cs`
+  - Examples: structured logging — template keeps fields, interpolation destroys them (and pays even when the level is off) ✅ · **averages lie**: avg 39.85ms inside a 100ms SLA while p99 is 2000ms ✅ · **cardinality**: `order_id` → 100,000 series vs `status`+`region` → 15 ✅ · W3C `traceparent` propagation — 1 trace/1 root vs 2 traces/2 roots when dropped ✅ · five causes of a severed trace (and why gRPC is not a fix) ✅ · correlation by trace id ✅ · **production**: `ActivitySource`/`Meter` are the BCL *and* the OTel API — 0 spans with no listener, 200 with one, zero domain changes ✅
+  - Practice: [Exercise 07 — instrument an order service](../practice/Exercise07-Observability.md)
 - **5.2 AuthN/Z** — OAuth2/OIDC ☐ · JWT ☐ · sessions ☐ · RBAC (Keycloak at work) ☐
 - **5.3 Security** — OWASP Top 10 ☐ · input validation ☐ · secrets ☐ · encryption basics ☐
 
@@ -149,10 +151,10 @@ Maps onto the tree above.
 - [x] HTTP + REST/gRPC design + versioning (§3.1–3.4) · [x] retries/timeouts/circuit breakers/idempotency (§6.2)
 - **Build:** API + resilient client (Polly) + idempotent write · **At work:** trace the pipeline end to end; write an ADR · **Read:** Release It!
 
-### Month 3 — Concurrency & observability (§4, §5.1) — ⏳ **in progress**
+### Month 3 — Concurrency & observability (§4, §5.1) — ✅ **COMPLETE**
 - [x] async internals (§4.1) · [x] Task/ValueTask/IAsyncEnumerable/Channel (§4.2) · [x] races & locks (§4.3) · [x] immutability (§4.4) · [x] producer/consumer pipelines (§4.5)
-- [ ] OpenTelemetry traces/metrics/logs (§5.1)
-- **Build:** concurrent producer/consumer with full telemetry — **this is §4.5 + §5.1 combined**, not a separate project · **Read:** DDIA ch. 5–9
+- [x] OpenTelemetry traces/metrics/logs (§5.1)
+- **Build:** concurrent producer/consumer with full telemetry — Exercises 06 + 07 together · **Read:** DDIA ch. 5–9
 
 ### Month 4 — Distributed systems & messaging (§8)
 - [ ] CAP, consistency, fallacies, event-driven · [ ] Event Hub/Kafka, CQRS, event sourcing
