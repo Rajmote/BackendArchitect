@@ -118,7 +118,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 - **7.2 Azure deeply** — App/Container Apps ☐ · Event Hub ☐ · Cosmos ☐ · Key Vault ☐ · monitoring ☐
 
 ## 8. Distributed Systems 📁 `.../Distributed`
-- **8.1 Theory** — CAP ☐ · consistency models ☐ · replication ☐ · partitioning ☐ · consensus ☐ · the 8 fallacies ☐
+- **8.1 Theory** — ✅ [notes](../src/BackendArchitect/Distributed/Theory/DistributedTheory.md) · code `RemoteCallOutcomes.cs`, `QuorumCluster.cs`, `ReplicaLag.cs`
+  - Examples: **the third outcome** — a timeout cannot distinguish "never arrived" from "done, reply lost"; 110 identical calls → 110 charges vs 100 with an idempotency key ✅ · the 8 fallacies ✅ · **CAP**: 5 nodes split 3|2 — CP refuses 10 writes, AP keeps all 20 and buys 10 conflicts ✅ · P is not a choice, and it's per-operation ✅ · PACELC, and Cosmos's five levels as its E-side ✅ · consistency ladder (linearizable → eventual) ✅ · **"eventually" has no time bound**: lag 0 when writes stop, 3 when they don't ✅ · read-your-writes: 50/50 stale reads → 0 ✅ · replication vs partitioning ✅ · quorum overlap, odd node counts ✅ · **why a hand-rolled distributed lock is unsafe** — leases, pauses, fencing tokens ✅
+  - Practice: [Exercise 08 — inventory that refuses rather than oversells](../practice/Exercise08-DistributedTheory.md)
 - **8.2 Messaging & streaming** — Kafka / Azure Event Hub ☐
 - **8.3 CQRS** ☐ · **8.4 Event sourcing** ☐ *(trade-offs, not cargo-cult)*
 

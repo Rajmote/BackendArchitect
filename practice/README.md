@@ -46,11 +46,14 @@ dotnet test BackendArchitect.slnx -c Release
 | 05 | §4.4 Immutability — a lock-free pricing catalogue | [Exercise05-Immutability.md](Exercise05-Immutability.md) | 🔴 in progress (3 starter tests) |
 | 06 | §4.5 Pipelines — a receipt pipeline that survives bad data | [Exercise06-Pipelines.md](Exercise06-Pipelines.md) | 🔴 in progress (3 starter tests) |
 | 07 | §5.1 Observability — instrument an order service | [Exercise07-Observability.md](Exercise07-Observability.md) | 🔴 in progress (3 starter tests) |
+| 08 | §8.1 Distributed theory — inventory that refuses rather than oversells | [Exercise08-DistributedTheory.md](Exercise08-DistributedTheory.md) | 🔴 in progress (3 starter tests) |
 
-> 🔴 **Four exercises are open — all of Month 3.** Learning runs Theory → Quiz at full speed; the
-> exercises are written up with stubs and starter tests and left **red**. **Red is the to-do list.**
+> 🔴 **Exercises are deliberately deferred to the end of the course.** Learning runs **Theory → Quiz**
+> for every topic through Month 6; each exercise is written up with a stub and starter tests as its
+> topic finishes, and left **red**. They all get solved in one block at the end.
+> **Red is the backlog, not a bug.**
 >
-> Suggested order: **04 → 06 → 07 → 05**
+> Suggested order when that time comes: **04 → 06 → 07 → 05**
 > - **04** then **06** build on each other (locks, then the pipeline that uses them)
 > - **07** instruments **06**, which is Month 3's "build" from the roadmap: *a concurrent
 >   producer/consumer with full telemetry*
