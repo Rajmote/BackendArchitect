@@ -20,6 +20,7 @@ using BackendArchitect.Concurrency.Immutability;
 using BackendArchitect.Concurrency.Pipelines;
 using BackendArchitect.Observability.Telemetry;
 using BackendArchitect.Distributed.Theory;
+using BackendArchitect.Distributed.Messaging.Queues;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -111,3 +112,7 @@ new ObservabilityDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Distributed Systems · theory (the third outcome, CAP, replica lag) =====");
 new DistributedTheoryDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Distributed Systems · Messaging A: queues (locks, DLQ, sessions) =====");
+new QueuesDemo().Run();

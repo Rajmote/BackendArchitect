@@ -32,7 +32,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | Sub topic | Notes | Code | Status |
 |---|---|---|---|
 | 8.1 Theory (CAP, fallacies, consistency, replication, consensus) | [DistributedTheory.md](../src/BackendArchitect/Distributed/Theory/DistributedTheory.md) | `RemoteCallOutcomes.cs`, `QuorumCluster.cs`, `ReplicaLag.cs` | ✅ |
-| 8.2 Messaging & streaming (Kafka / Event Hub) | — | — | ⏳ next |
+| 8.2a Messaging — **queues** (Service Bus) | [Queues.md](../src/BackendArchitect/Distributed/Messaging/Queues/Queues.md) | `MessageQueue.cs`, `QueueScenarios.cs` | ✅ |
+| 8.2b Messaging — **logs** (Kafka / Event Hub) | — | — | ⏳ next |
 | 8.3 CQRS | — | — | ☐ |
 | 8.4 Event sourcing | — | — | ☐ |
 
@@ -118,6 +119,7 @@ machine answers → scale) · partition key + id = point read · 429 surfaces as
 ## Log
 | Date | What I learned / built | Next |
 |---|---|---|
+| 2026-10-20 | §8.2a Messaging — queues: the lock lends rather than gives, peek-lock vs receive-and-delete (0 lost vs 10), a slow handler racing its own retry (90 duplicates → 0 with renewal), classify-then-dead-letter (1 run vs 10), three services on one queue each seeing a third, sessions for ordering (12/12 out of sequence → 0). 13 tests. Quiz 3 clean + 2 partial — best of the course | §8.2b Messaging — logs (Kafka / Event Hub) |
 | 2026-10-07 | §8.1 Distributed systems theory: the third outcome of a remote call (110 calls → 110 charges vs 100 with a key), the 8 fallacies, CAP corrected (P is not a choice; CP refuses 10, AP buys 10 conflicts), PACELC, the consistency ladder, "eventually" has no time bound (lag 3 while writes continue), read-your-writes (50/50 stale → 0), replication vs partitioning, quorum overlap, and why a hand-rolled distributed lock needs fencing tokens. 10 tests. Quiz 2 clean + 3 partial — best since §4.5 | §8.2 Messaging & streaming (Kafka / Event Hub) |
 | 2026-09-26 | **Month 3 COMPLETE.** §5.1 Observability: structured logging (template vs interpolation), averages vs percentiles (avg 39.85ms hiding a 2000ms p99), cardinality (100,000 series vs 15), trace propagation (1 trace vs 2 when the header is dropped), and the production layer — `ActivitySource`/`Meter` are the BCL *and* the OTel API, so the domain never names a vendor. 11 tests. Quiz 1 clean + 4 partial | **Month 4 — Distributed systems & messaging** (§8) |
 | 2026-09-16 | §4.5 Producer/consumer pipelines: bottleneck = slowest stage, queue depth locates it, backpressure reaching the front door, `try` placement (181/200 vs 37/200), premature `Complete()` losing 3 of 40, ordering 12/12 reordered → 0 when partitioned, TPL Dataflow as the production layer. 11 tests. Quiz 2 clean + 3 with the core idea right — clear step up. **Exercises 04, 05, 06 now have stubs + starter tests and are red** | §5.1 Observability (OpenTelemetry) |
