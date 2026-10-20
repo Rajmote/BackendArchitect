@@ -21,6 +21,7 @@ using BackendArchitect.Concurrency.Pipelines;
 using BackendArchitect.Observability.Telemetry;
 using BackendArchitect.Distributed.Theory;
 using BackendArchitect.Distributed.Messaging.Queues;
+using BackendArchitect.Distributed.Messaging.Logs;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -116,3 +117,7 @@ new DistributedTheoryDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Distributed Systems · Messaging A: queues (locks, DLQ, sessions) =====");
 new QueuesDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Distributed Systems · Messaging B: logs (offsets, replay, lag) =====");
+new LogsDemo().Run();

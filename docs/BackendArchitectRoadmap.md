@@ -124,7 +124,9 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
 - **8.2 Messaging & streaming** — taught in two parts so the two models stay separate
   - **8.2a Queues** (Service Bus / RabbitMQ / SQS) — ✅ [notes](../src/BackendArchitect/Distributed/Messaging/Queues/Queues.md) · code `MessageQueue.cs`, `QueueScenarios.cs`
     - Examples: the lend-don't-give lock lifecycle ✅ · peek-lock vs receive-and-delete (0 lost/10 redelivered vs 10 lost) ✅ · **a handler slower than the lock runs concurrently with its own retry** — 90 duplicate side effects, 0 with renewal ✅ · classify failures: 10 handler runs vs 1 ✅ · three services on one queue each see a third (30 → 10/10/10) vs a topic (30/30/30) ✅ · ordering: 12/12 keys out of sequence vs 0 with sessions ✅ · queue depth as the metric ✅
-  - **8.2b Logs** (Kafka / Azure Event Hub) ☐
+  - **8.2b Logs** (Kafka / Azure Event Hub) — ✅ [notes](../src/BackendArchitect/Distributed/Messaging/Logs/Logs.md) · code `EventLog.cs`, `LogScenarios.cs`
+    - Examples: reading doesn't consume ✅ · **the partition ceiling** — 5 consumers on 3 partitions = 3 working, 2 idle ✅ · why an offset can't be shared ✅ · **commit order IS the guarantee** — 10 lost vs 10 duplicated ✅ · at-most-once loses silently *and lag reads zero* ✅ · **replay**: a later subscriber sees 0 on a topic, 30 on a log ✅ · retention as deletion — 120 records gone unread after a 60h outage against 48h retention ✅ · per-partition lag rules out capacity ✅ · a poison message blocks its partition (7/20 → 20/20 once dead-lettered + committed) ✅ · rebalancing is a redelivery event ✅ · Event Hub checkpoints live in *your* Blob Storage ✅ · the queue-vs-log decision table ✅
+    - Practice: [Exercise 09 — a log consumer that survives a bad day](../practice/Exercise09-Messaging.md)
 - **8.3 CQRS** ☐ · **8.4 Event sourcing** ☐ *(trade-offs, not cargo-cult)*
 
 ## 9. Architecture & Design 📁 `.../Architecture`

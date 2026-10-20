@@ -47,6 +47,7 @@ dotnet test BackendArchitect.slnx -c Release
 | 06 | §4.5 Pipelines — a receipt pipeline that survives bad data | [Exercise06-Pipelines.md](Exercise06-Pipelines.md) | 🔴 in progress (3 starter tests) |
 | 07 | §5.1 Observability — instrument an order service | [Exercise07-Observability.md](Exercise07-Observability.md) | 🔴 in progress (3 starter tests) |
 | 08 | §8.1 Distributed theory — inventory that refuses rather than oversells | [Exercise08-DistributedTheory.md](Exercise08-DistributedTheory.md) | 🔴 in progress (3 starter tests) |
+| 09 | §8.2b Messaging — a log consumer that survives a bad day | [Exercise09-Messaging.md](Exercise09-Messaging.md) | 🔴 in progress (3 starter tests) |
 
 > 🔴 **Exercises are deliberately deferred to the end of the course.** Learning runs **Theory → Quiz**
 > for every topic through Month 6; each exercise is written up with a stub and starter tests as its
