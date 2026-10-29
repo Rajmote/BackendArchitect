@@ -34,8 +34,8 @@ Next: **Month 2 — APIs, HTTP & resilience** (§3 and §6.2).
 | 8.1 Theory (CAP, fallacies, consistency, replication, consensus) | [DistributedTheory.md](../src/BackendArchitect/Distributed/Theory/DistributedTheory.md) | `RemoteCallOutcomes.cs`, `QuorumCluster.cs`, `ReplicaLag.cs` | ✅ |
 | 8.2a Messaging — **queues** (Service Bus) | [Queues.md](../src/BackendArchitect/Distributed/Messaging/Queues/Queues.md) | `MessageQueue.cs`, `QueueScenarios.cs` | ✅ |
 | 8.2b Messaging — **logs** (Kafka / Event Hub) | [Logs.md](../src/BackendArchitect/Distributed/Messaging/Logs/Logs.md) | `EventLog.cs`, `LogScenarios.cs` | ✅ |
-| 8.3 CQRS | — | — | ⏳ next |
-| 8.4 Event sourcing | — | — | ☐ |
+| 8.3 CQRS | [Cqrs.md](../src/BackendArchitect/Distributed/Cqrs/Cqrs.md) | `ReadModelLevels.cs`, `OrderProjection.cs`, `LevelDecision.cs` | ✅ |
+| 8.4 Event sourcing | — | — | ⏳ next |
 
 ## ✅ Month 3 — Concurrency & observability: COMPLETE (221 reference tests green)
 
@@ -119,6 +119,7 @@ machine answers → scale) · partition key + id = point read · 429 surfaces as
 ## Log
 | Date | What I learned / built | Next |
 |---|---|---|
+| 2026-10-29 | §8.3 CQRS: the four levels (level 2 cuts 240k rows to 5k with no staleness; level 3 scans the same 5k and adds a projector), the read-your-writes bill (50/50 missing → 0 by returning from the command), a synchronous projection behaving exactly like level 2, a stalled projector leaving every health check green, CQRS ≠ event sourcing, and the level decided per use case (5 cases → 2,2,3,3,2). 12 tests. Quiz 2 clean + 2 partial + 1 blank — the dip is on *judgment* questions, which is Month 6's subject | §8.4 Event sourcing |
 | 2026-10-20 | §8.2b Messaging — logs: reading doesn't consume, the partition ceiling (5 consumers → 3 working/2 idle), commit order as the delivery guarantee (10 lost vs 10 duplicated), replay (a later subscriber sees 0 on a topic, 30 on a log), retention as data loss (120 records deleted unread), per-partition lag ruling out capacity, and a poison message blocking its partition (offset 7/20 vs 20/20). 16 tests. Quiz 4 clean + 1 partial — **best of the course** | §8.3 CQRS |
 | 2026-10-20 | §8.2a Messaging — queues: the lock lends rather than gives, peek-lock vs receive-and-delete (0 lost vs 10), a slow handler racing its own retry (90 duplicates → 0 with renewal), classify-then-dead-letter (1 run vs 10), three services on one queue each seeing a third, sessions for ordering (12/12 out of sequence → 0). 13 tests. Quiz 3 clean + 2 partial — best of the course | §8.2b Messaging — logs (Kafka / Event Hub) |
 | 2026-10-07 | §8.1 Distributed systems theory: the third outcome of a remote call (110 calls → 110 charges vs 100 with a key), the 8 fallacies, CAP corrected (P is not a choice; CP refuses 10, AP buys 10 conflicts), PACELC, the consistency ladder, "eventually" has no time bound (lag 3 while writes continue), read-your-writes (50/50 stale → 0), replication vs partitioning, quorum overlap, and why a hand-rolled distributed lock needs fencing tokens. 10 tests. Quiz 2 clean + 3 partial — best since §4.5 | §8.2 Messaging & streaming (Kafka / Event Hub) |

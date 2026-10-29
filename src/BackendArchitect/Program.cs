@@ -22,6 +22,7 @@ using BackendArchitect.Observability.Telemetry;
 using BackendArchitect.Distributed.Theory;
 using BackendArchitect.Distributed.Messaging.Queues;
 using BackendArchitect.Distributed.Messaging.Logs;
+using BackendArchitect.Distributed.Cqrs;
 
 Console.WriteLine("===== Databases · SQL · Indexing (seek vs scan) =====");
 new IndexingDemo().Run();
@@ -121,3 +122,7 @@ new QueuesDemo().Run();
 Console.WriteLine();
 Console.WriteLine("===== Distributed Systems · Messaging B: logs (offsets, replay, lag) =====");
 new LogsDemo().Run();
+
+Console.WriteLine();
+Console.WriteLine("===== Distributed Systems · CQRS (the four levels, and when not to) =====");
+new CqrsDemo().Run();

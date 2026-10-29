@@ -127,7 +127,10 @@ dotnet run   --project src/BackendArchitect -c Release --no-build
   - **8.2b Logs** (Kafka / Azure Event Hub) — ✅ [notes](../src/BackendArchitect/Distributed/Messaging/Logs/Logs.md) · code `EventLog.cs`, `LogScenarios.cs`
     - Examples: reading doesn't consume ✅ · **the partition ceiling** — 5 consumers on 3 partitions = 3 working, 2 idle ✅ · why an offset can't be shared ✅ · **commit order IS the guarantee** — 10 lost vs 10 duplicated ✅ · at-most-once loses silently *and lag reads zero* ✅ · **replay**: a later subscriber sees 0 on a topic, 30 on a log ✅ · retention as deletion — 120 records gone unread after a 60h outage against 48h retention ✅ · per-partition lag rules out capacity ✅ · a poison message blocks its partition (7/20 → 20/20 once dead-lettered + committed) ✅ · rebalancing is a redelivery event ✅ · Event Hub checkpoints live in *your* Blob Storage ✅ · the queue-vs-log decision table ✅
     - Practice: [Exercise 09 — a log consumer that survives a bad day](../practice/Exercise09-Messaging.md)
-- **8.3 CQRS** ☐ · **8.4 Event sourcing** ☐ *(trade-offs, not cargo-cult)*
+- **8.3 CQRS** — ✅ [notes](../src/BackendArchitect/Distributed/Cqrs/Cqrs.md) · code `ReadModelLevels.cs`, `OrderProjection.cs`, `LevelDecision.cs`
+  - Examples: **CQRS as a spectrum, not a switch** — level 2 cuts 240,000 rows to 5,000 with no staleness, level 3 scans the same 5,000 and adds a projector ✅ · the read-your-writes bill: 50/50 orders missing, 0 when the command returns its result, 50 waits when you use a session token ✅ · a synchronous projection behaves exactly like level 2 — so you wanted level 2 ✅ · **a stalled projector leaves the read store up, fast and wrong** (50/100 projected, health green) ✅ · CQRS ≠ event sourcing, and "replay on every read" inverts the point ✅ · **the level is per use case**: 5 use cases → levels 2,2,3,3,2 ✅ · the discriminator is a different *technology*, never "the query is slow" ✅
+  - Practice: [Exercise 10 — a level-3 read model](../practice/Exercise10-Cqrs.md)
+- **8.4 Event sourcing** ☐ *(trade-offs, not cargo-cult)*
 
 ## 9. Architecture & Design 📁 `.../Architecture`
 - **9.1 Styles** — monolith → modular monolith → microservices → event-driven → serverless ☐
